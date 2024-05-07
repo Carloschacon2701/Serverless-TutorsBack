@@ -51,6 +51,16 @@ model Consultancies {
   config     Config   @relation(fields: [config_id], references: [id])
 }
 
+model Document {
+  id          Int      @id @default(autoincrement())
+  name        String
+  path        String
+  category_id Int
+  category    Category @relation(fields: [category_id], references: [id])
+  subject_id  Int
+  subject     Subject  @relation(fields: [subject_id], references: [id])
+}
+
 model Role {
   id    Int    @id @default(autoincrement())
   name  String
@@ -65,13 +75,15 @@ model Currency {
 }
 
 model Subject {
-  id     Int      @id @default(autoincrement())
-  name   String
-  config Config[]
+  id       Int        @id @default(autoincrement())
+  name     String
+  config   Config[]
+  Document Document[]
 }
 
 model Category {
-  id     Int      @id @default(autoincrement())
-  name   String
-  config Config[]
+  id       Int        @id @default(autoincrement())
+  name     String
+  config   Config[]
+  Document Document[]
 }

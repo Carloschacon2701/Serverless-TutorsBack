@@ -5,14 +5,11 @@ useDotenv: true
 provider:
   name: aws
   runtime: nodejs20.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
 
 functions:
-  api:
-    handler: index.handler
-    events:
-      - httpApi:
-          path: /
-          method: get
+  health: ${file(src/functions/health/index.yml):health}
 
 plugins:
   - serverless-offline

@@ -1,0 +1,7 @@
+health:
+  handler: src/functions/health/handler.health
+  events:
+    - http:
+        path: /health
+        method: get
+        cors: true
