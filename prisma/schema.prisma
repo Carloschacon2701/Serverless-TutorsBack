@@ -12,3 +12,66 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id                    Int             @id @default(autoincrement())
+  name                  String
+  email                 String          @unique
+  role_id               Int
+  role                  Role            @relation(fields: [role_id], references: [id])
+  description           String?
+  config                Config[]
+  consultancies_student Consultancies[] @relation("student_relation")
+  consultancies_tutor   Consultancies[] @relation("tutor_relation")
+}
+
+model Config {
+  id            Int             @id @default(autoincrement())
+  work_days     Int
+  subject_id    Int
+  subject       Subject         @relation(fields: [subject_id], references: [id])
+  category_id   Int
+  category      Category        @relation(fields: [category_id], references: [id])
+  currency_id   Int
+  currency      Currency        @relation(fields: [currency_id], references: [id])
+  tutor_id      Int
+  tutor         User            @relation(fields: [tutor_id], references: [id])
+  hourly_price  Float
+  consultancies Consultancies[]
+}
+
+model Consultancies {
+  id         Int      @id @default(autoincrement())
+  date       DateTime
+  student_id Int
+  student    User     @relation("student_relation", fields: [student_id], references: [id])
+  tutor_id   Int
+  tutor      User     @relation("tutor_relation", fields: [tutor_id], references: [id])
+  config_id  Int
+  config     Config   @relation(fields: [config_id], references: [id])
+}
+
+model Role {
+  id    Int    @id @default(autoincrement())
+  name  String
+  users User[]
+}
+
+model Currency {
+  id     Int      @id @default(autoincrement())
+  name   String
+  symbol String
+  config Config[]
+}
+
+model Subject {
+  id     Int      @id @default(autoincrement())
+  name   String
+  config Config[]
+}
+
+model Category {
+  id     Int      @id @default(autoincrement())
+  name   String
+  config Config[]
+}
