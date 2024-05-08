@@ -4,9 +4,14 @@ import {
   APIGatewayProxyResult,
 } from "aws-lambda";
 import { Responses } from "../../libs/Responses";
+import i18n from "../../libs/i18n";
+import middy from "@middy/core";
+import { i18nMiddleware } from "../../libs/i18n/middleware";
 
-export const health: Handler = async (
+const handler = async (
   _event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
-  return Responses._200({ message: "Health Check", data: { status: "UP" } });
+  return Responses._200({ message: i18n.t("hello"), data: { status: "UP" } });
 };
+
+export const health = middy(handler).use(i18nMiddleware());
