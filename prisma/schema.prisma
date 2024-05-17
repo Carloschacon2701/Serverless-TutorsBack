@@ -9,6 +9,11 @@ generator client {
   previewFeatures = ["driverAdapters"]
 }
 
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
 model User {
   id                    Int             @id @default(autoincrement())
   name                  String

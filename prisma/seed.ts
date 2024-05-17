@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { initializePrisma } from "../src/utils/prisma";
 
-const prisma = new PrismaClient();
+const prisma = initializePrisma();
 
 const roles = [
   {
@@ -61,8 +61,6 @@ const categories = [
   },
 ];
 
-// 1 2 3 11 6 7
-
 const subjects = [
   { id: 1, name: "Physics I", category_id: 1 },
   { id: 2, name: "Physics II", category_id: 1 },
@@ -120,17 +118,15 @@ async function main() {
   console.log("Start seeding...");
 
   for (const role of roles) {
-    prisma.role.upsert({
-      where: { id: role.id },
-      update: role,
-      create: role,
+    await prisma.role.create({
+      data: role,
     });
 
     console.log(`Role ${role.name} created`);
   }
 
   for (const category of categories) {
-    prisma.category.upsert({
+    await prisma.category.upsert({
       where: { id: category.id },
       update: category,
       create: category,
@@ -140,7 +136,7 @@ async function main() {
   }
 
   for (const subject of subjects) {
-    prisma.subject.upsert({
+    await prisma.subject.upsert({
       where: { id: subject.id },
       update: subject,
       create: subject,
