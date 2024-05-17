@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "<!-- title: 'AWS Simple HTTP Endpoint example in NodeJS' description: 'This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.' layout: Doc framework: v3 platform: AWS language: nodeJS authorLink: 'https://github.com/serverless' authorName: 'Serverless, inc.' authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4' -->",
   "main": "index.js",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate": "prisma migrate dev",
@@ -21,8 +24,10 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@libsql/client": "^0.6.0",
     "@middy/core": "^4.7.0",
     "@middy/http-json-body-parser": "^4.7.0",
+    "@prisma/adapter-libsql": "^5.14.0",
     "@prisma/client": "^5.13.0",
     "@types/aws-lambda": "^8.10.137",
     "i18next": "^23.11.3",

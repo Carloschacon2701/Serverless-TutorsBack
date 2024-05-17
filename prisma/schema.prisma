@@ -5,12 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 model User {
@@ -75,10 +71,12 @@ model Currency {
 }
 
 model Subject {
-  id       Int        @id @default(autoincrement())
-  name     String
-  config   Config[]
-  Document Document[]
+  id          Int        @id @default(autoincrement())
+  name        String
+  category_id Int
+  Category    Category   @relation(fields: [category_id], references: [id])
+  config      Config[]
+  Document    Document[]
 }
 
 model Category {
@@ -86,4 +84,5 @@ model Category {
   name     String
   config   Config[]
   Document Document[]
+  Subject  Subject[]
 }
