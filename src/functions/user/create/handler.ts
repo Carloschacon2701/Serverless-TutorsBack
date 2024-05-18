@@ -68,18 +68,20 @@ const handler = async (
   }
 };
 
-export const health = middy(handler).use([
+export const create = middy(handler).use([
   jsonBodyParser(),
   i18nMiddleware(),
   schemaValidator({
     body: object({
-      name: string().required(i18nString("nameRequired")),
-      email: string().email().required(i18nString("emailRequired")),
-      password: string().required(i18nString("passwordRequired")),
+      name: string().required(() => i18nString("nameRequired")),
+      email: string()
+        .email()
+        .required(() => i18nString("emailRequired")),
+      password: string().required(() => i18nString("passwordRequired")),
       role: number()
-        .required(i18nString("roleRequired"))
-        .oneOf([1, 2, 3], i18nString("roleInvalid")),
-      description: string().required(i18nString("descriptionRequired")),
+        .required(() => i18nString("roleRequired"))
+        .oneOf([1, 2, 3], () => i18nString("roleInvalid")),
+      description: string().required(() => i18nString("descriptionRequired")),
     }),
   }),
 ]);

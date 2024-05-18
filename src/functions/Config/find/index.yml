@@ -1,0 +1,7 @@
+findConfig:
+  handler: src/functions/Config/find/handler.find
+  events:
+    - http:
+        path: config/{id}
+        method: get
+        cors: true

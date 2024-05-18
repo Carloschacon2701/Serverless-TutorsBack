@@ -13,6 +13,7 @@ export const EN = {
         roleInvalid: "Role is invalid",
         descriptionRequired: "Description is required",
         emailExists: "An user with this email already exists",
+        passwordRequired: "Password is required",
       },
     },
   },
@@ -30,6 +31,12 @@ export const EN = {
         categoryIdRequired: "Category ID is required",
         tutorIdRequired: "Tutor ID is required",
         currencyIdRequired: "Currency ID is required",
+      },
+    },
+
+    list: {
+      validations: {
+        configNotFound: "Configuration not found",
       },
     },
   },

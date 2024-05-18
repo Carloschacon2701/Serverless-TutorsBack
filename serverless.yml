@@ -1,5 +1,5 @@
 service: aws-finaltest
-frameworkVersion: '3'
+frameworkVersion: "3"
 useDotenv: true
 
 provider:
@@ -10,6 +10,16 @@ provider:
 
 functions:
   health: ${file(src/functions/health/index.yml):health}
+
+  # USER
+  createUser: ${file(src/functions/user/create/index.yml):createUser}
+  # findUser: ${file(src/functions/user/find/index.yml):findUser}
+  # updateUser: ${file(src/functions/user/update/index.yml):updateUser}
+  # deleteUser: ${file(src/functions/user/delete/index.yml):deleteUser}
+
+  # CONFIG
+  createConfig: ${file(src/functions/Config/create/index.yml):createConfig}
+  findConfig: ${file(src/functions/Config/find/index.yml):findConfig}
 
 plugins:
   - serverless-offline

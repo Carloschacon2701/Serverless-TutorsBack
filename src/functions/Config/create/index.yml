@@ -1,0 +1,7 @@
+createConfig:
+  handler: src/functions/Config/create/handler.create
+  events:
+    - http:
+        path: config
+        method: post
+        cors: true

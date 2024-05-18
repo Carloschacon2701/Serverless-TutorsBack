@@ -13,6 +13,7 @@ export const ES = {
         roleInvalid: "El Rol es inválido",
         descriptionRequired: "La Descripción es requerida",
         emailExists: "Un usuario con este email ya existe",
+        passwordRequired: "La Contraseña es requerida",
       },
     },
   },
@@ -30,6 +31,12 @@ export const ES = {
         categoryIdRequired: "El ID de la categoría es requerido",
         tutorIdRequired: "El ID del tutor es requerido",
         currencyIdRequired: "El ID de la moneda es requerido",
+      },
+    },
+
+    list: {
+      validations: {
+        configNotFound: "Configuración no encontrada",
       },
     },
   },
