@@ -26,9 +26,15 @@ model User {
   consultancies_tutor   Consultancies[] @relation("tutor_relation")
 }
 
+model Day {
+  id     Int      @id @default(autoincrement())
+  name   String
+  config Config[]
+}
+
 model Config {
   id            Int             @id @default(autoincrement())
-  work_days     Int
+  work_days     Day[]
   subject_id    Int
   subject       Subject         @relation(fields: [subject_id], references: [id])
   category_id   Int
@@ -91,3 +97,6 @@ model Category {
   Document Document[]
   Subject  Subject[]
 }
+
+
+// turso db shell unet-test < ./prisma/migrations/20240518214742_days_table/migration.sql

@@ -2,6 +2,55 @@ import { initializePrisma } from "../src/utils/prisma";
 
 const prisma = initializePrisma();
 
+const days = [
+  {
+    id: 1,
+    name: "Monday",
+  },
+  {
+    id: 2,
+    name: "Tuesday",
+  },
+  {
+    id: 3,
+    name: "Wednesday",
+  },
+  {
+    id: 4,
+    name: "Thursday",
+  },
+  {
+    id: 5,
+    name: "Friday",
+  },
+  {
+    id: 6,
+    name: "Saturday",
+  },
+  {
+    id: 7,
+    name: "Sunday",
+  },
+];
+
+const currencies = [
+  {
+    id: 1,
+    name: "USD",
+    symbol: "$",
+  },
+  {
+    id: 2,
+    name: "COP",
+    symbol: "$",
+  },
+  {
+    id: 3,
+    name: "VES",
+    symbol: "Bs",
+  },
+];
+
 const roles = [
   {
     id: 1,
@@ -117,9 +166,21 @@ const subjects = [
 async function main() {
   console.log("Start seeding...");
 
+  for (const day of days) {
+    await prisma.day.upsert({
+      where: { id: day.id },
+      update: day,
+      create: day,
+    });
+
+    console.log(`Day ${day.name} created`);
+  }
+
   for (const role of roles) {
-    await prisma.role.create({
-      data: role,
+    await prisma.role.upsert({
+      where: { id: role.id },
+      update: role,
+      create: role,
     });
 
     console.log(`Role ${role.name} created`);
@@ -143,6 +204,16 @@ async function main() {
     });
 
     console.log(`Subject ${subject.name} created`);
+  }
+
+  for (const currency of currencies) {
+    await prisma.currency.upsert({
+      where: { id: currency.id },
+      update: currency,
+      create: currency,
+    });
+
+    console.log(`Currency ${currency.name} created`);
   }
 
   console.log("Seeding finished.");

@@ -8,6 +8,7 @@ import { schemaValidator } from "../../../libs/lambda";
 import { array, mixed, number, object } from "yup";
 import { initializePrisma } from "../../../utils/prisma";
 import { Roles } from "../../../utils/enums";
+import { ConfigCreation } from "../../../utils/Interfaces/Config";
 
 const i18nString = (key: string, options?: object) =>
   i18n.t("Config.create.validations." + key, { ...options });
@@ -17,7 +18,7 @@ const handler = async (
 ): Promise<APIGatewayProxyResult> => {
   try {
     const prisma = initializePrisma();
-
+    const body = event.body as unknown as ConfigCreation;
     const {
       work_days,
       subject_id,
@@ -25,7 +26,7 @@ const handler = async (
       tutor_id,
       currency_id,
       hourly_price,
-    } = JSON.parse(event.body as string);
+    } = body;
 
     const existingCategory = await prisma.category.findUnique({
       where: {
@@ -87,7 +88,11 @@ const handler = async (
     const newConfig = await prisma.config.create({
       data: {
         hourly_price,
-        work_days,
+        work_days: {
+          connect: work_days.map((day: number) => ({
+            id: day,
+          })),
+        },
         subject_id,
         category_id,
         tutor_id,
@@ -112,19 +117,25 @@ export const create = middy(handler).use([
   schemaValidator({
     body: object({
       work_days: array().of(
-        mixed().oneOf([1, 2, 3, 4, 5]).required(i18nString("workDaysRequired"))
+        mixed()
+          .oneOf([1, 2, 3, 4, 5, 6, 7])
+          .required(() => i18nString("workDaysRequired"))
       ),
-      subject_id: number().positive().required(i18nString("subjectIdRequired")),
+      subject_id: number()
+        .positive()
+        .required(() => i18nString("subjectIdRequired")),
       category_id: number()
         .positive()
-        .required(i18nString("categoryIdRequired")),
-      tutor_id: number().positive().required(i18nString("tutorIdRequired")),
+        .required(() => i18nString("categoryIdRequired")),
+      tutor_id: number()
+        .positive()
+        .required(() => i18nString("tutorIdRequired")),
       currency_id: number()
         .positive()
-        .required(i18nString("currencyIdRequired")),
+        .required(() => i18nString("currencyIdRequired")),
       hourly_price: number()
         .positive()
-        .required(i18nString("hourlyPriceRequired")),
+        .required(() => i18nString("hourlyPriceRequired")),
     }),
   }),
 ]);
