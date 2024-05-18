@@ -7,6 +7,11 @@ provider:
   runtime: nodejs20.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
+  environment:
+    COGNITO_CLIENT_ID: ${env:COGNITO_CLIENT_ID}
+    AWS_REGION: ${env:AWS_REGION}
+    COGNITO_USER_POOL_ID: ${env:COGNITO_USER_POOL_ID}
+    S3_BUCKET: ${env:S3_BUCKET}
 
 functions:
   health: ${file(src/functions/health/index.yml):health}

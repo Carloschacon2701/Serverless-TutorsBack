@@ -6,8 +6,9 @@ import { Responses } from "../../../libs/Responses";
 import { schemaValidator } from "../../../libs/lambda";
 import { i18nMiddleware } from "../../../libs/i18n/middleware";
 import i18n from "../../../libs/i18n";
-import { PrismaClient } from "@prisma/client";
 import { Cognito } from "../../../libs/AWS/Cognito";
+import { UserCreation } from "../../../utils/Interfaces/User";
+import { initializePrisma } from "../../../utils/prisma";
 
 const i18nString = (key: string) => i18n.t("User.newUser.validations." + key);
 
@@ -15,10 +16,9 @@ const handler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   try {
-    const prisma = new PrismaClient();
-    const { name, email, role, description, password } = JSON.parse(
-      event.body as string
-    );
+    const prisma = initializePrisma();
+    const body = event.body as unknown as UserCreation;
+    const { name, email, role, description, password } = body;
 
     const existingUser = await prisma.user.findUnique({
       where: {
@@ -33,11 +33,15 @@ const handler = async (
     });
 
     if (!existingRole) {
-      throw new Error(i18nString("roleInvalid"));
+      return Responses._400({
+        message: i18nString("roleInvalid"),
+      });
     }
 
     if (existingUser) {
-      throw new Error(i18nString("emailExists"));
+      return Responses._400({
+        message: i18nString("emailExists"),
+      });
     }
 
     await Cognito.signUp({
@@ -51,7 +55,7 @@ const handler = async (
       data: {
         name,
         email,
-        role,
+        role_id: role,
         description,
       },
     });
@@ -61,6 +65,7 @@ const handler = async (
       user: newUser,
     });
   } catch (error) {
+    console.log(error);
     return Responses._500({
       message: i18n.t("internalServerError"),
       error: error,

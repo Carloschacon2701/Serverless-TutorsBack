@@ -31,10 +31,10 @@ export const Cognito = {
           Name: "email",
           Value: email,
         },
-        {
-          Name: "email_verified",
-          Value: "true",
-        },
+        // {
+        //   Name: "email_verified",
+        //   Value: "true",
+        // },
         {
           Name: "custom:role",
           Value: role,
