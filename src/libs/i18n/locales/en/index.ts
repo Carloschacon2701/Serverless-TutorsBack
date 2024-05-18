@@ -16,4 +16,6 @@ export const EN = {
     descriptionRequired: "Description is required",
     emailExists: "An user with this email already exists",
   },
+
+  internalServerError: "Internal Server Error",
 };

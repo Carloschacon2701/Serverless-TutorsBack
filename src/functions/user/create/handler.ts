@@ -1,8 +1,4 @@
-import {
-  Handler,
-  APIGatewayProxyEvent,
-  APIGatewayProxyResult,
-} from "aws-lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import middy from "@middy/core";
 import jsonBodyParser from "@middy/http-json-body-parser";
 import { number, object, string } from "yup";
@@ -11,6 +7,8 @@ import { schemaValidator } from "../../../libs/lambda";
 import { i18nMiddleware } from "../../../libs/i18n/middleware";
 import i18n from "../../../libs/i18n";
 import { PrismaClient } from "@prisma/client";
+
+const i18nString = (key: string) => i18n.t("User.newUser.validations." + key);
 
 const handler = async (
   event: APIGatewayProxyEvent
@@ -26,7 +24,7 @@ const handler = async (
     });
 
     if (existingUser) {
-      throw new Error(i18n.t("validations.emailExists"));
+      throw new Error(i18nString("emailExists"));
     }
 
     const newUser = await prisma.user.create({
@@ -44,7 +42,7 @@ const handler = async (
     });
   } catch (error) {
     return Responses._500({
-      message: "Internal Server Error",
+      message: i18n.t("internalServerError"),
       error: error,
     });
   }
@@ -55,12 +53,12 @@ export const health = middy(handler).use([
   i18nMiddleware(),
   schemaValidator({
     body: object({
-      name: string().required(i18n.t("validations.nameRequired")),
-      email: string().email().required(i18n.t("validations.emailRequired")),
+      name: string().required(i18nString("nameRequired")),
+      email: string().email().required(i18nString("emailRequired")),
       role: number()
-        .required(i18n.t("validations.roleRequired"))
-        .oneOf([1, 2, 3], i18n.t("validations.roleInvalid")),
-      description: string().required(i18n.t("validations.descriptionRequired")),
+        .required(i18nString("roleRequired"))
+        .oneOf([1, 2, 3], i18nString("roleInvalid")),
+      description: string().required(i18nString("descriptionRequired")),
     }),
   }),
 ]);
