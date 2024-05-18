@@ -7,6 +7,7 @@ import { schemaValidator } from "../../../libs/lambda";
 import { i18nMiddleware } from "../../../libs/i18n/middleware";
 import i18n from "../../../libs/i18n";
 import { PrismaClient } from "@prisma/client";
+import { Cognito } from "../../../libs/AWS/Cognito";
 
 const i18nString = (key: string) => i18n.t("User.newUser.validations." + key);
 
@@ -15,7 +16,9 @@ const handler = async (
 ): Promise<APIGatewayProxyResult> => {
   try {
     const prisma = new PrismaClient();
-    const { name, email, role, description } = JSON.parse(event.body as string);
+    const { name, email, role, description, password } = JSON.parse(
+      event.body as string
+    );
 
     const existingUser = await prisma.user.findUnique({
       where: {
@@ -23,9 +26,26 @@ const handler = async (
       },
     });
 
+    const existingRole = await prisma.role.findUnique({
+      where: {
+        id: role,
+      },
+    });
+
+    if (!existingRole) {
+      throw new Error(i18nString("roleInvalid"));
+    }
+
     if (existingUser) {
       throw new Error(i18nString("emailExists"));
     }
+
+    await Cognito.signUp({
+      email,
+      name,
+      password,
+      role: role.toString(),
+    });
 
     const newUser = await prisma.user.create({
       data: {
@@ -55,6 +75,7 @@ export const health = middy(handler).use([
     body: object({
       name: string().required(i18nString("nameRequired")),
       email: string().email().required(i18nString("emailRequired")),
+      password: string().required(i18nString("passwordRequired")),
       role: number()
         .required(i18nString("roleRequired"))
         .oneOf([1, 2, 3], i18nString("roleInvalid")),
