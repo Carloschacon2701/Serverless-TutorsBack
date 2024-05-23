@@ -2,6 +2,6 @@ createUser:
   handler: src/functions/user/create/handler.create
   events:
     - http:
-        path: user/create
+        path: user
         method: post
         cors: true

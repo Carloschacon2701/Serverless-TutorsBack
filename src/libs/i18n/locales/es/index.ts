@@ -14,6 +14,8 @@ export const ES = {
         descriptionRequired: "La Descripción es requerida",
         emailExists: "Un usuario con este email ya existe",
         passwordRequired: "La Contraseña es requerida",
+        userNotFound: "Usuario no encontrado",
+        idRequired: "ID es requerido",
       },
     },
   },
