@@ -20,7 +20,6 @@ functions:
   createUser: ${file(src/functions/user/create/index.yml):createUser}
   # findUser: ${file(src/functions/user/find/index.yml):findUser}
   # updateUser: ${file(src/functions/user/update/index.yml):updateUser}
-  # deleteUser: ${file(src/functions/user/delete/index.yml):deleteUser}
 
   # CONFIG
   createConfig: ${file(src/functions/Config/create/index.yml):createConfig}

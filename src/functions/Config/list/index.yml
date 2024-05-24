@@ -1,0 +1,7 @@
+listConfig:
+  handler: src/functions/Config/list/handler.list
+  events:
+    - http:
+        path: config
+        method: get
+        cors: true

@@ -17,6 +17,10 @@ export const Responses = {
     return this._DefineResponse(200, data);
   },
 
+  _201(data = {}) {
+    return this._DefineResponse(201, data);
+  },
+
   _400(data = {}) {
     return this._DefineResponse(400, data);
   },
