@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    name: "Deploy to Lend2b Environment"
+    name: "Deploy to Environment"
     runs-on: ubuntu-latest
     env:
       ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
