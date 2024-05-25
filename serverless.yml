@@ -18,12 +18,22 @@ functions:
 
   # USER
   createUser: ${file(src/functions/user/create/index.yml):createUser}
-  # findUser: ${file(src/functions/user/find/index.yml):findUser}
+  findUser: ${file(src/functions/user/find/index.yml):findUser}
   # updateUser: ${file(src/functions/user/update/index.yml):updateUser}
 
   # CONFIG
   createConfig: ${file(src/functions/Config/create/index.yml):createConfig}
   findConfig: ${file(src/functions/Config/find/index.yml):findConfig}
+  listConfig: ${file(src/functions/Config/list/index.yml):listConfig}
+
+  # CONSULTANCY
+  createConsultancy: ${file(src/functions/consultancies/create/index.yml):createConsultancy}
+
+  # DOCUMENT
+  createDocument: ${file(src/functions/docs/Upload/index.yml):createDocument}
+
+  #Currency
+  listCurrency: ${file(src/functions/Currency/list/index.yml):listCurrency}
 
 plugins:
   - serverless-offline

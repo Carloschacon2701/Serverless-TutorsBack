@@ -49,6 +49,7 @@ export const ES = {
       categoryRequired: "La categoría es requerida",
       subjectRequired: "La materia es requerida",
       fileTypeInvalid: "Tipo de archivo inválido",
+      subjectNotFound: "Materia no encontrada",
     },
   },
 

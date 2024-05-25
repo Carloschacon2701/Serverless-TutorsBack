@@ -1,0 +1,7 @@
+listCurrency:
+  handler: src/functions/Currency/list/handler.list
+  events:
+    - http:
+        path: currency
+        method: get
+        cors: true

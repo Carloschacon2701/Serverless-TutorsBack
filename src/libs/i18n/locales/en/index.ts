@@ -49,6 +49,7 @@ export const EN = {
       categoryRequired: "Category is required",
       subjectRequired: "Subject is required",
       FileTypeInvalid: "Invalid file type",
+      subjectNotFound: "Subject not found",
     },
   },
 

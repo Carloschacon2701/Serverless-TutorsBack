@@ -1,0 +1,7 @@
+createDocument:
+  handler: src/functions/docs/Upload/handler.upload
+  events:
+    - http:
+        path: docs
+        method: post
+        cors: true

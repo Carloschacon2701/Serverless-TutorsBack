@@ -1,0 +1,7 @@
+createConsultancy:
+  handler: src/functions/consultancies/create/handler.create
+  events:
+    - http:
+        path: consultancies
+        method: post
+        cors: true

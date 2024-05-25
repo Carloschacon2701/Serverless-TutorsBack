@@ -18,7 +18,15 @@ const handler = async (
   try {
     const prisma = initializePrisma();
     const body = event.body as unknown as DocumentCreation;
-    const { category, name, subject } = body;
+    const { name, subject } = body;
+
+    const existingSubject = await prisma.subject.findUnique({
+      where: { id: subject },
+    });
+
+    if (!existingSubject) {
+      return Responses._404({ message: i18n.t("subjectNotFound") });
+    }
 
     const key = "documents/" + name;
 
@@ -28,7 +36,7 @@ const handler = async (
       data: {
         name: name,
         path: key,
-        category_id: category,
+        category_id: existingSubject?.category_id,
         subject_id: subject,
       },
     });
@@ -48,7 +56,6 @@ export const upload = middy(handler).use([
   schemaValidator({
     body: object({
       name: string().required(() => i18nString("nameRequired")),
-      category: number().required(() => i18nString("categoryRequired")),
       subject: number().required(() => i18nString("subjectRequired")),
     }),
   }),

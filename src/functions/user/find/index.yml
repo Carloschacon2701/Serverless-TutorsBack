@@ -1,5 +1,5 @@
 findUser:
-  handler: src/functions/user/find/index.handler
+  handler: src/functions/user/find/handler.find
   events:
     - http:
         path: /user/{id}
