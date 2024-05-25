@@ -3,7 +3,7 @@ import { Responses } from "../../../libs/Responses";
 import { initializePrisma } from "../../../utils/prisma";
 
 const handler = async (
-  event: APIGatewayProxyEvent
+  _event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   try {
     const prisma = initializePrisma();
