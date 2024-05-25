@@ -38,3 +38,5 @@ jobs:
 
       - name: Deploy to ${{env.ENVIRONMENT}} Environment
         run: sls deploy --stage ${{env.ENVIRONMENT}} --region ${{env.AWS_REGION}}
+        env:
+          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_KEY }}
