@@ -19,34 +19,16 @@ const handler = async (
   try {
     const prisma = initializePrisma();
     const body = event.body as unknown as ConfigCreation;
-    const {
-      work_days,
-      subject_id,
-      category_id,
-      tutor_id,
-      currency_id,
-      hourly_price,
-    } = body;
-
-    const existingCategory = await prisma.category.findUnique({
-      where: {
-        id: category_id,
-      },
-    });
-
-    if (!existingCategory) {
-      throw new Error(i18nString("categoryNotFound"));
-    }
+    const { work_days, subject_id, tutor_id, currency_id, hourly_price } = body;
 
     const existingSubject = await prisma.subject.findUnique({
       where: {
         id: subject_id,
-        category_id: existingCategory?.id,
       },
     });
 
     if (!existingSubject) {
-      throw new Error(i18nString("subjectNotFound"));
+      return Responses._404({ message: i18nString("subjectNotFound") });
     }
 
     const existingTutor = await prisma.user.findUnique({
@@ -57,7 +39,7 @@ const handler = async (
     });
 
     if (!existingTutor) {
-      throw new Error(i18nString("tutorNotFound"));
+      return Responses._404({ message: i18nString("tutorNotFound") });
     }
 
     const existingConfig = await prisma.config.findFirst({
@@ -68,11 +50,11 @@ const handler = async (
     });
 
     if (existingConfig) {
-      throw new Error(
-        i18nString("configAlreadyExists", {
+      return Responses._400({
+        message: i18nString("configAlreadyExists", {
           subject_name: existingSubject.name,
-        })
-      );
+        }),
+      });
     }
 
     const existingCurrency = await prisma.currency.findUnique({
@@ -82,7 +64,7 @@ const handler = async (
     });
 
     if (!existingCurrency) {
-      throw new Error(i18nString("currencyNotFound"));
+      return Responses._404({ message: i18nString("currencyNotFound") });
     }
 
     const newConfig = await prisma.config.create({
@@ -94,13 +76,16 @@ const handler = async (
           })),
         },
         subject_id,
-        category_id,
+        category_id: existingSubject.category_id,
         tutor_id,
         currency_id,
       },
     });
 
-    return Responses._200(newConfig);
+    return Responses._200({
+      message: i18n.t("Config.create.success"),
+      newConfig,
+    });
   } catch (error) {
     console.log("Error creating config", error);
 
@@ -124,9 +109,6 @@ export const create = middy(handler).use([
       subject_id: number()
         .positive()
         .required(() => i18nString("subjectIdRequired")),
-      category_id: number()
-        .positive()
-        .required(() => i18nString("categoryIdRequired")),
       tutor_id: number()
         .positive()
         .required(() => i18nString("tutorIdRequired")),

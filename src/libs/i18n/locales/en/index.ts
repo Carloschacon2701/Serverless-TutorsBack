@@ -22,10 +22,10 @@ export const EN = {
 
   Config: {
     create: {
+      success: "Configuration created successfully",
       validations: {
         tutorNotFound: "Tutor not found",
-        configAlreadyExists:
-          "A configuration for the subject {subject_name} already exists",
+        configAlreadyExists: "A configuration for this subject already exists",
         currencyNotFound: "Currency not found",
         hourlyPriceRequired: "Hourly price is required",
         workDaysRequired: "Work days are required",
