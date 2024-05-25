@@ -1,6 +1,6 @@
 service: aws-finaltest
 configValidationMode: error
-frameworkVersion: "4"
+frameworkVersion: "3"
 useDotenv: true
 
 provider:
