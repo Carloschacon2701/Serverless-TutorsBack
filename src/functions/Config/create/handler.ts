@@ -105,7 +105,7 @@ const handler = async (
     console.log("Error creating config", error);
 
     return Responses._500({
-      message: i18nString("internalServerError"),
+      message: i18n.t("internalServerError"),
       error: error,
     });
   }

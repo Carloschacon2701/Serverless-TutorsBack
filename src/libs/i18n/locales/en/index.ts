@@ -36,10 +36,19 @@ export const EN = {
       },
     },
 
-    list: {
+    find: {
       validations: {
         configNotFound: "Configuration not found",
       },
+    },
+  },
+
+  Docs: {
+    validations: {
+      nameRequired: "Name is required",
+      categoryRequired: "Category is required",
+      subjectRequired: "Subject is required",
+      FileTypeInvalid: "Invalid file type",
     },
   },
 

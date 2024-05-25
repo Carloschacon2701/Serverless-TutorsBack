@@ -8,7 +8,7 @@ import { schemaValidator } from "../../../libs/lambda";
 import { Responses } from "../../../libs/Responses";
 import i18n from "../../../libs/i18n";
 
-const i18nString = (key: string) => i18n.t("Config.list.validations" + key);
+const i18nString = (key: string) => i18n.t("Config.find.validations" + key);
 
 const handler = async (
   event: APIGatewayProxyEvent

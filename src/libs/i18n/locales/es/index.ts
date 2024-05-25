@@ -36,10 +36,19 @@ export const ES = {
       },
     },
 
-    list: {
+    find: {
       validations: {
         configNotFound: "Configuración no encontrada",
       },
+    },
+  },
+
+  Docs: {
+    validations: {
+      nameRequired: "El nombre es requerido",
+      categoryRequired: "La categoría es requerida",
+      subjectRequired: "La materia es requerida",
+      fileTypeInvalid: "Tipo de archivo inválido",
     },
   },
 
