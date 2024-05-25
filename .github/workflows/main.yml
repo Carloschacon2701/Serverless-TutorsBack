@@ -1,42 +1,72 @@
-name: UNET PROJECT
+name: Deploy master branch
+
 on:
   push:
     branches:
-      - production
+      - master
 
 jobs:
   deploy:
-    name: "Deploy to Environment"
+    name: deploy
     runs-on: ubuntu-latest
-    env:
-      ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
-      COGNITO_CLIENT_ID: ${{ secrets.COGNITO_CLIENT_ID }}
-      COGNITO_USER_POOL_ID: ${{ secrets.COGNITO_USER_POOL_ID }}
-      S3_BUCKET: ${{ secrets.S3_BUCKET }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-      TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
-      TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
+    strategy:
+      matrix:
+        node-version: [20.x]
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 20.x
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          node-version: 20.x
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - name: serverless deploy
+        uses: serverless/github-action@v3.2
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Install serverless cli
-        run: npm install -g serverless
-
-      - name: Deploy to ${{env.ENVIRONMENT}} Environment
-        run: sls deploy --stage ${{env.ENVIRONMENT}} --region ${{env.AWS_REGION}}
+          args: deploy
         env:
-          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_KEY }}
+          # SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+          # or if using AWS credentials directly
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+# name: UNET PROJECT
+# on:
+#   push:
+#     branches:
+#       - production
+
+# jobs:
+#   deploy:
+#     name: "Deploy to Environment"
+#     runs-on: ubuntu-latest
+#     env:
+#       ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+#       COGNITO_CLIENT_ID: ${{ secrets.COGNITO_CLIENT_ID }}
+#       COGNITO_USER_POOL_ID: ${{ secrets.COGNITO_USER_POOL_ID }}
+#       S3_BUCKET: ${{ secrets.S3_BUCKET }}
+#       AWS_REGION: ${{ secrets.AWS_REGION }}
+#       TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+#       TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Use Node.js 20.x
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: 20.x
+
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: ${{ env.AWS_REGION }}
+
+#       - name: Install dependencies
+#         run: npm install
+
+#       - name: Install serverless cli
+#         run: npm install -g serverless
+
+#       - name: Deploy to ${{env.ENVIRONMENT}} Environment
+#         run: sls deploy --stage ${{env.ENVIRONMENT}} --region ${{env.AWS_REGION}}
+#         env:
+#           SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_KEY }}
