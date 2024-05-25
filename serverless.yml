@@ -1,4 +1,4 @@
-service: aws-finaltest-test
+service: aws-finaltest
 configValidationMode: error
 frameworkVersion: "3"
 useDotenv: true
