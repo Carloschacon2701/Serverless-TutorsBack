@@ -29,6 +29,8 @@ provider:
             - "logs:CreateLogGroup"
             - "logs:CreateLogStream"
             - "logs:PutLogEvents"
+          Resource:
+            - "*"
 
 functions:
   health: ${file(src/functions/health/index.yml):health}
