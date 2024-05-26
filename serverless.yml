@@ -14,8 +14,8 @@ provider:
     REGION: ${env:REGION}
     COGNITO_USER_POOL_ID: ${env:COGNITO_USER_POOL_ID}
     S3_BUCKET: ${env:S3_BUCKET}
-    TURSO_DATABASE_URL: ${{ env:TURSO_DATABASE_URL }}
-    TURSO_AUTH_TOKEN: ${{ env:TURSO_AUTH_TOKEN }}
+    TURSO_DATABASE_URL: ${env:TURSO_DATABASE_URL}
+    TURSO_AUTH_TOKEN: ${env:TURSO_AUTH_TOKEN}
   iam:
     role:
       statements:
@@ -33,6 +33,10 @@ provider:
             - "logs:PutLogEvents"
           Resource:
             - "*"
+custom:
+  prune:
+    automatic: true
+    number: 0
 
 functions:
   health: ${file(src/functions/health/index.yml):health}
@@ -59,3 +63,4 @@ functions:
 plugins:
   - serverless-offline
   - serverless-plugin-typescript
+  - serverless-prune-plugin
