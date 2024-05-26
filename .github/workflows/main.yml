@@ -14,7 +14,7 @@ jobs:
       COGNITO_CLIENT_ID: ${{ secrets.COGNITO_CLIENT_ID }}
       COGNITO_USER_POOL_ID: ${{ secrets.COGNITO_USER_POOL_ID }}
       S3_BUCKET: ${{ secrets.S3_BUCKET }}
-      REGION: ${{ secrets.AWS_REGION }}
+      REGION: ${{ secrets.REGION }}
       TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
       TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
     strategy:
@@ -51,7 +51,7 @@ jobs:
 #       COGNITO_CLIENT_ID: ${{ secrets.COGNITO_CLIENT_ID }}
 #       COGNITO_USER_POOL_ID: ${{ secrets.COGNITO_USER_POOL_ID }}
 #       S3_BUCKET: ${{ secrets.S3_BUCKET }}
-#       AWS_REGION: ${{ secrets.AWS_REGION }}
+#       REGION: ${{ secrets.REGION }}
 #       TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
 #       TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
 #     steps:
@@ -66,7 +66,7 @@ jobs:
 #         with:
 #           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
 #           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           aws-region: ${{ env.AWS_REGION }}
+#           aws-region: ${{ env.REGION }}
 
 #       - name: Install dependencies
 #         run: npm install
@@ -75,6 +75,6 @@ jobs:
 #         run: npm install -g serverless
 
 #       - name: Deploy to ${{env.ENVIRONMENT}} Environment
-#         run: sls deploy --stage ${{env.ENVIRONMENT}} --region ${{env.AWS_REGION}}
+#         run: sls deploy --stage ${{env.ENVIRONMENT}} --region ${{env.REGION}}
 #         env:
 #           SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_KEY }}

@@ -11,7 +11,7 @@ provider:
   memorySize: 512
   environment:
     COGNITO_CLIENT_ID: ${env:COGNITO_CLIENT_ID}
-    REGION: ${env:AWS_REGION}
+    REGION: ${env:REGION}
     COGNITO_USER_POOL_ID: ${env:COGNITO_USER_POOL_ID}
     S3_BUCKET: ${env:S3_BUCKET}
   iam:
