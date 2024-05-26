@@ -14,7 +14,7 @@ jobs:
       COGNITO_CLIENT_ID: ${{ secrets.COGNITO_CLIENT_ID }}
       COGNITO_USER_POOL_ID: ${{ secrets.COGNITO_USER_POOL_ID }}
       S3_BUCKET: ${{ secrets.S3_BUCKET }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
+      REGION: ${{ secrets.AWS_REGION }}
       TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
       TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
     strategy:
