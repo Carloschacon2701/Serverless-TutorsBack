@@ -44,6 +44,7 @@ functions:
   # USER
   createUser: ${file(src/functions/user/create/index.yml):createUser}
   findUser: ${file(src/functions/user/find/index.yml):findUser}
+  loginUser: ${file(src/functions/user/logIn/index.yml):userLogin}
   # updateUser: ${file(src/functions/user/update/index.yml):updateUser}
 
   # CONFIG

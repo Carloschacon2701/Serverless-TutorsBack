@@ -18,6 +18,16 @@ export const EN = {
         idRequired: "ID is required",
       },
     },
+
+    logIn: {
+      success: "User logged in successfully",
+      validations: {
+        emailRequired: "Email is required",
+        passwordRequired: "Password is required",
+        invalidCredentials: "Invalid credentials",
+        userNotConfirmed: "User not confirmed",
+      },
+    },
   },
 
   Config: {

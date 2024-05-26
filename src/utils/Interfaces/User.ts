@@ -5,3 +5,8 @@ export interface UserCreation {
   description: string;
   password: string;
 }
+
+export interface UserLogIn {
+  email: string;
+  password: string;
+}

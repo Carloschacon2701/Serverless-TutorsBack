@@ -18,6 +18,16 @@ export const ES = {
         idRequired: "ID es requerido",
       },
     },
+
+    logIn: {
+      success: "Usuario logueado exitosamente",
+      validations: {
+        emailRequired: "El email es requerido",
+        passwordRequired: "La contraseña es requerida",
+        invalidCredentials: "Credenciales inválidas",
+        userNotConfirmed: "Usuario no confirmado",
+      },
+    },
   },
 
   Config: {

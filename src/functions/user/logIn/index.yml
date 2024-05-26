@@ -1,0 +1,7 @@
+userLogin:
+  handler: src/functions/user/logIn/handler.logIn
+  events:
+    - http:
+        path: user/login
+        method: post
+        cors: true
