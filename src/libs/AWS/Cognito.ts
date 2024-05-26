@@ -1,4 +1,5 @@
 import {
+  AdminConfirmSignUpCommand,
   CognitoIdentityProviderClient,
   InitiateAuthCommand,
   SignUpCommand,
@@ -31,10 +32,6 @@ export const Cognito = {
           Name: "email",
           Value: email,
         },
-        // {
-        //   Name: "email_verified",
-        //   Value: "true",
-        // },
         {
           Name: "custom:role",
           Value: role,
@@ -47,6 +44,13 @@ export const Cognito = {
     });
 
     const response = await client.send(command);
+
+    const confirmCommand = new AdminConfirmSignUpCommand({
+      Username: email,
+      UserPoolId: process.env.COGNITO_USER_POOL_ID,
+    });
+
+    await client.send(confirmCommand);
 
     return response;
   },

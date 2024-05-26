@@ -28,6 +28,11 @@ provider:
             - "arn:aws:s3:::${env:S3_BUCKET}/*"
         - Effect: "Allow"
           Action:
+            - "cognito-idp:AdminConfirmSignUp"
+          Resource:
+            - "*"
+        - Effect: "Allow"
+          Action:
             - "logs:CreateLogGroup"
             - "logs:CreateLogStream"
             - "logs:PutLogEvents"

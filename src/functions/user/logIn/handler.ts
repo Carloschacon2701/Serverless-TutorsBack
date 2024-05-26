@@ -33,7 +33,7 @@ const handler = async (
 
     console.log(result);
 
-    return Responses._200({ message: i18n.t("User.logIn.sucess"), result });
+    return Responses._200({ message: i18n.t("User.logIn.success"), result });
   } catch (error: any) {
     if (error?.name === "UserNotConfirmedException") {
       return Responses._400({
