@@ -63,5 +63,13 @@ export const ES = {
     },
   },
 
+  Category: {
+    find: {
+      validations: {
+        idRequired: "ID es requerido",
+      },
+    },
+  },
+
   internalServerError: "Error interno del servidor",
 };

@@ -66,6 +66,10 @@ functions:
   #Currency
   listCurrency: ${file(src/functions/Currency/list/index.yml):listCurrency}
 
+  #Category
+  findCategory: ${file(src/functions/Category/find/index.yml):findCategory}
+  listCategory: ${file(src/functions/Category/list/index.yml):listCategory}
+
 plugins:
   - serverless-offline
   - serverless-plugin-typescript

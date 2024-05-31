@@ -1,0 +1,7 @@
+listCategory:
+  handler: src/functions/Category/list/handler.list
+  events:
+    - http:
+        path: category
+        method: get
+        cors: true
