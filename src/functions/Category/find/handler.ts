@@ -15,12 +15,21 @@ export const handler = async (
 ): Promise<APIGatewayProxyResult> => {
   try {
     const prisma = initializePrisma();
-    const { queryStringParameters } = event;
-    const { id = 0 } = queryStringParameters || {};
+    const { pathParameters } = event;
+    const { id = 0 } = pathParameters || {};
 
     const category = await prisma.category.findUnique({
       where: {
         id: Number(id),
+      },
+      select: {
+        name: true,
+        id: true,
+        _count: {
+          select: {
+            Document: true,
+          },
+        },
       },
     });
 
@@ -35,7 +44,7 @@ export const find = middy(handler).use([
   jsonBodyParser(),
   i18nMiddleware(),
   schemaValidator({
-    queryStringParameters: object({
+    pathParameters: object({
       id: number().required(i18nString("validations.idRequired")),
     }),
   }),

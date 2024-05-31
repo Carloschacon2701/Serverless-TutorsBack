@@ -1,0 +1,7 @@
+listSubject:
+  handler: src/functions/Subject/list/handler.list
+  events:
+    - http:
+        path: /subject
+        method: get
+        cors: true
