@@ -73,8 +73,9 @@ functions:
 
   #Subject
   findSubject: ${file(src/functions/Subject/find/index.yml):findSubject}
+  listSubject: ${file(src/functions/Subject/list/index.yml):listSubject}
 
 plugins:
   - serverless-offline
-  - serverless-plugin-typescript
   - serverless-prune-plugin
+  - serverless-plugin-typescript

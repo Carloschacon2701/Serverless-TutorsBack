@@ -1,5 +1,5 @@
 listDocuments:
-  handler: src/functions/docs/list/index.handler
+  handler: src/functions/docs/list/handler.list
   events:
     - http:
         path: docs/{subject_id}

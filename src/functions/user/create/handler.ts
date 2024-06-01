@@ -85,7 +85,7 @@ export const create = middy(handler).use([
       password: string().required(() => i18nString("passwordRequired")),
       role: number()
         .required(() => i18nString("roleRequired"))
-        .oneOf([1, 2, 3], () => i18nString("roleInvalid")),
+        .oneOf([1, 2], () => i18nString("roleInvalid")),
       description: string().required(() => i18nString("descriptionRequired")),
     }),
   }),

@@ -22,6 +22,9 @@ const handler = async (
       where: {
         id: Number(id),
       },
+      include: {
+        Category: true,
+      },
     });
 
     if (!subject)

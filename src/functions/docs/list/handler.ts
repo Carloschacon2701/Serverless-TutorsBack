@@ -33,6 +33,12 @@ const handler = async (
       where: {
         subject_id: Number(subject_id),
       },
+      select: {
+        category_id: true,
+        id: true,
+        name: true,
+        subject_id: true,
+      },
       take: Number(limit),
       skip: (Number(page) - 1) * Number(limit),
     });

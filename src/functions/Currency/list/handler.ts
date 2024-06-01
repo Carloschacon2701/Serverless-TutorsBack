@@ -16,7 +16,7 @@ const handler = async (
       },
     });
 
-    return Responses._200({ currencies });
+    return Responses._200({ data: currencies });
   } catch (error) {
     console.error(error);
     return Responses._500({ message: "internalServerError", error });
