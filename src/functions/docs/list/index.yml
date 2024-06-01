@@ -1,0 +1,7 @@
+listDocuments:
+  handler: src/functions/docs/list/index.handler
+  events:
+    - http:
+        path: docs/{subject_id}
+        method: get
+        cors: true

@@ -30,6 +30,15 @@ export const EN = {
     },
   },
 
+  Subject: {
+    find: {
+      validations: {
+        notFound: "Subject not found",
+        idRequired: "ID is required",
+      },
+    },
+  },
+
   Config: {
     create: {
       success: "Configuration created successfully",
@@ -54,12 +63,19 @@ export const EN = {
   },
 
   Docs: {
-    validations: {
-      nameRequired: "Name is required",
-      categoryRequired: "Category is required",
-      subjectRequired: "Subject is required",
-      FileTypeInvalid: "Invalid file type",
-      subjectNotFound: "Subject not found",
+    list: {
+      validations: {
+        subjectNotFound: "Subject not found",
+      },
+    },
+    upload: {
+      validations: {
+        nameRequired: "Name is required",
+        categoryRequired: "Category is required",
+        subjectRequired: "Subject is required",
+        FileTypeInvalid: "Invalid file type",
+        subjectNotFound: "Subject not found",
+      },
     },
   },
 

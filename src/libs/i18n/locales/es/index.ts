@@ -30,6 +30,15 @@ export const ES = {
     },
   },
 
+  Subject: {
+    find: {
+      validations: {
+        notFound: "Materia no encontrada",
+        idRequired: "ID es requerido",
+      },
+    },
+  },
+
   Config: {
     create: {
       success: "Configuración creada exitosamente",
@@ -54,12 +63,19 @@ export const ES = {
   },
 
   Docs: {
-    validations: {
-      nameRequired: "El nombre es requerido",
-      categoryRequired: "La categoría es requerida",
-      subjectRequired: "La materia es requerida",
-      fileTypeInvalid: "Tipo de archivo inválido",
-      subjectNotFound: "Materia no encontrada",
+    list: {
+      validations: {
+        subjectNotFound: "Materia no encontrada",
+      },
+    },
+    upload: {
+      validations: {
+        nameRequired: "El nombre es requerido",
+        categoryRequired: "La categoría es requerida",
+        subjectRequired: "La materia es requerida",
+        fileTypeInvalid: "Tipo de archivo inválido",
+        subjectNotFound: "Materia no encontrada",
+      },
     },
   },
 

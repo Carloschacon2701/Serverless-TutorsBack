@@ -1,0 +1,7 @@
+findSubject:
+  handler: src/functions/Subject/find/handler.find
+  events:
+    - http:
+        path: subject/{id}
+        method: get
+        cors: true

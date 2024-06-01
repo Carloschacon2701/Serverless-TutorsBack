@@ -1,16 +1,16 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { Responses } from "../../../libs/Responses";
-import i18n from "../../../libs/i18n";
 import { initializePrisma } from "../../../utils/prisma";
+import i18n from "../../../libs/i18n";
 import middy from "@middy/core";
 import jsonBodyParser from "@middy/http-json-body-parser";
 import { i18nMiddleware } from "../../../libs/i18n/middleware";
 import { schemaValidator } from "../../../libs/lambda";
 import { number, object } from "yup";
 
-const i18nString = (key: string) => i18n.t("Category.find." + key);
+const i18nString = (key: string) => i18n.t("Subject.find." + key);
 
-export const handler = async (
+const handler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   try {
@@ -18,24 +18,17 @@ export const handler = async (
     const { pathParameters } = event;
     const { id = 0 } = pathParameters || {};
 
-    const category = await prisma.category.findUnique({
+    const subject = await prisma.subject.findUnique({
       where: {
         id: Number(id),
       },
-
-      include: {
-        Subject: {
-          select: {
-            name: true,
-            id: true,
-          },
-        },
-      },
     });
 
-    return Responses._200({ data: category });
+    if (!subject)
+      return Responses._404({ message: i18nString("validations.notFound") });
+
+    return Responses._200({ data: subject });
   } catch (error) {
-    console.log("Error", error);
     return Responses._500({ message: i18n.t("internalServerError"), error });
   }
 };

@@ -17,11 +17,20 @@ const handler = async (
     const categories = await prisma.category.findMany({
       take: Number(limit),
       skip: (Number(page) - 1) * Number(limit),
+      select: {
+        name: true,
+        id: true,
+        _count: {
+          select: {
+            Subject: true,
+          },
+        },
+      },
     });
 
     const count = await prisma.category.count();
 
-    return Responses._200({ data: { ...categories }, count });
+    return Responses._200({ data: categories, count });
   } catch (error) {
     console.log("Error", error);
     return Responses._500({ message: i18n.t("internalServerError"), error });

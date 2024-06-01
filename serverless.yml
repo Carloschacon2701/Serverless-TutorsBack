@@ -62,6 +62,7 @@ functions:
 
   # DOCUMENT
   createDocument: ${file(src/functions/docs/Upload/index.yml):createDocument}
+  listDocuments: ${file(src/functions/docs/list/index.yml):listDocuments}
 
   #Currency
   listCurrency: ${file(src/functions/Currency/list/index.yml):listCurrency}
@@ -69,6 +70,9 @@ functions:
   #Category
   findCategory: ${file(src/functions/Category/find/index.yml):findCategory}
   listCategory: ${file(src/functions/Category/list/index.yml):listCategory}
+
+  #Subject
+  findSubject: ${file(src/functions/Subject/find/index.yml):findSubject}
 
 plugins:
   - serverless-offline
