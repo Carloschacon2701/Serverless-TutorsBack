@@ -18,6 +18,7 @@ const handler = async (
       take: Number(limit),
       skip: (Number(page) - 1) * Number(limit),
       select: {
+        Subject: true,
         name: true,
         id: true,
         _count: {

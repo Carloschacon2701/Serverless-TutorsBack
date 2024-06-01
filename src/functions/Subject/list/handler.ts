@@ -15,7 +15,11 @@ const handler = async (
   try {
     const prisma = initializePrisma();
     const { queryStringParameters } = event;
-    const { category = undefined } = queryStringParameters || {};
+    const {
+      category = undefined,
+      page = 1,
+      limit = 10,
+    } = queryStringParameters || {};
 
     let whereClause: Prisma.SubjectWhereInput = {};
 
@@ -36,6 +40,8 @@ const handler = async (
           },
         },
       },
+      skip: Number(page) - 1 * Number(limit),
+      take: Number(limit),
       where: whereClause,
     });
 
