@@ -25,6 +25,8 @@ model User {
   config                Config[]
   consultancies_student Consultancies[] @relation("student_relation")
   consultancies_tutor   Consultancies[] @relation("tutor_relation")
+  career_id             Int
+  career                Career          @relation(fields: [career_id], references: [id])
 }
 
 model Day {
@@ -99,4 +101,11 @@ model Category {
   Subject  Subject[]
 }
 
+model Career {
+  id   Int    @id @default(autoincrement())
+  name String
+  User User[]
+}
+
 // turso db shell unet-test < ./prisma/migrations/20240518214742_days_table/migration.sql
+// wsl -d Ubuntu
