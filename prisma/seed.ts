@@ -2,6 +2,45 @@ import { initializePrisma } from "../src/utils/prisma";
 
 const prisma = initializePrisma();
 
+const careers = [
+  {
+    id: 1,
+    name: "Informatic Engineering",
+  },
+  {
+    id: 2,
+    name: "Mechanical Engineering",
+  },
+  {
+    id: 3,
+    name: "Electronic Engineering",
+  },
+  {
+    id: 4,
+    name: "Civil Engineering",
+  },
+  {
+    id: 5,
+    name: "Architecture",
+  },
+  {
+    id: 6,
+    name: "Industrial Engineering",
+  },
+  {
+    id: 7,
+    name: "Environmental Engineering",
+  },
+  {
+    id: 8,
+    name: "Psychology",
+  },
+  {
+    id: 9,
+    name: "Civil Engineering",
+  },
+];
+
 const days = [
   {
     id: 1,
@@ -319,6 +358,16 @@ async function main() {
     });
 
     console.log(`Currency ${currency.name} created`);
+  }
+
+  for (const career of careers) {
+    await prisma.career.upsert({
+      where: { id: career.id },
+      update: career,
+      create: career,
+    });
+
+    console.log(`Career ${career.name} created`);
   }
 
   console.log("Seeding finished.");
