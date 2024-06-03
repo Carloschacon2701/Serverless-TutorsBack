@@ -17,18 +17,21 @@ const handler = async (
     const prisma = initializePrisma();
     const { id } = event.pathParameters as { id: string };
 
-    const user = prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         id: parseInt(id),
       },
-      include: {},
+      include: {
+        career: true,
+        role: true,
+      },
     });
 
     if (!user) {
       throw new Error(i18nString("userNotFound"));
     }
 
-    return Responses._200({ user });
+    return Responses._200({ data: user });
   } catch (error) {
     console.log(error);
     return Responses._500({ message: i18n.t("internalServerError"), error });

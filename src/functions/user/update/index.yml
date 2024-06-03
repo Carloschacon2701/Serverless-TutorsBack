@@ -1,0 +1,7 @@
+updateUser:
+  handler: src/functions/user/update/handler.update
+  events:
+    - http:
+        path: user
+        method: put
+        cors: true
