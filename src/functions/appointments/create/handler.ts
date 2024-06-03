@@ -33,19 +33,24 @@ const handler = async (
       });
     }
 
-    const consultancy = await prisma.appointment.create({
+    const appointment = await prisma.appointment.create({
       data: {
         date: new Date(date),
         tutor_id: existingMentorship.tutor_id,
         config_id: mentorship,
         student_id: student,
       },
+      include: {
+        mentorship: true,
+        student: true,
+        tutor: true,
+      },
     });
 
-    return Responses._201(consultancy);
+    return Responses._201({ data: appointment });
   } catch (error) {
     console.log(error);
-    return Responses._500({ message: "Internal Server Error", error });
+    return Responses._500({ message: i18n.t("internalServerError"), error });
   }
 };
 
