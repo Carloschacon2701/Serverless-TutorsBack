@@ -7,8 +7,9 @@ import { i18nMiddleware } from "../../../middlewares/i18n";
 import { schemaValidator } from "../../../libs/lambda";
 import { array, mixed, number, object } from "yup";
 import { initializePrisma } from "../../../utils/prisma";
-import { Roles } from "../../../utils/enums";
 import { MentorshipCreation } from "../../../utils/Interfaces/Config";
+import { cognitoMiddleware } from "../../../middlewares/JWT";
+import { Roles } from "../../../utils/enums";
 
 const i18nString = (key: string, options?: object) =>
   i18n.t("Mentorship.create.validations." + key, { ...options });
@@ -19,7 +20,8 @@ const handler = async (
   try {
     const prisma = initializePrisma();
     const body = event.body as unknown as MentorshipCreation;
-    const { work_days, subject_id, tutor_id, currency_id, hourly_price } = body;
+    const { work_days, subject_id, currency_id, hourly_price, cognitoUser } =
+      body;
 
     const existingSubject = await prisma.subject.findUnique({
       where: {
@@ -31,20 +33,9 @@ const handler = async (
       return Responses._404({ message: i18nString("subjectNotFound") });
     }
 
-    const existingTutor = await prisma.user.findUnique({
-      where: {
-        id: tutor_id,
-        role_id: Roles.Tutor,
-      },
-    });
-
-    if (!existingTutor) {
-      return Responses._404({ message: i18nString("tutorNotFound") });
-    }
-
     const existingMentorship = await prisma.mentorship.findFirst({
       where: {
-        tutor_id: tutor_id,
+        tutor_id: cognitoUser.id,
         subject_id: subject_id,
       },
     });
@@ -77,7 +68,7 @@ const handler = async (
         },
         subject_id,
         category_id: existingSubject.category_id,
-        tutor_id,
+        tutor_id: cognitoUser.id,
         currency_id,
       },
     });
@@ -99,6 +90,7 @@ const handler = async (
 export const create = middy(handler).use([
   jsonBodyParser(),
   i18nMiddleware(),
+  cognitoMiddleware([Roles.Tutor]),
   schemaValidator({
     body: object({
       work_days: array().of(
@@ -109,9 +101,6 @@ export const create = middy(handler).use([
       subject_id: number()
         .positive()
         .required(() => i18nString("subjectIdRequired")),
-      tutor_id: number()
-        .positive()
-        .required(() => i18nString("tutorIdRequired")),
       currency_id: number()
         .positive()
         .required(() => i18nString("currencyIdRequired")),

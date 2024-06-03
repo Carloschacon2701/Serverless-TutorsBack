@@ -14,7 +14,7 @@ interface Handler {
   };
 }
 
-export const cognitoMiddleware = () => {
+export const cognitoMiddleware = (validRoles?: number[]) => {
   return {
     before: async (handler: Handler) => {
       const prisma = initializePrisma();
@@ -22,6 +22,7 @@ export const cognitoMiddleware = () => {
       const parsedToken = token.substring(7);
 
       const result = await Cognito.verifyToken(parsedToken);
+      const role = (result?.["custom:role"] as number) || 0;
 
       if (!result) {
         return Responses._401({ message: i18n.t("unauthorized") });
@@ -33,6 +34,10 @@ export const cognitoMiddleware = () => {
 
       if (!user) {
         return Responses._404({ message: i18n.t("userNotFound") });
+      }
+
+      if (validRoles && !validRoles.includes(role)) {
+        return Responses._403({ message: i18n.t("forbidden") });
       }
 
       handler.event.body.userCognito = user;

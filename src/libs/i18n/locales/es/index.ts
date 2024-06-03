@@ -92,4 +92,5 @@ export const ES = {
   internalServerError: "Error interno del servidor",
   userNotFound: "Usuario no encontrado",
   unathorized: "No autorizado",
+  forbidden: "No está autorizado para realizar esta acción",
 };

@@ -84,4 +84,5 @@ export const EN = {
   internalServerError: "Internal Server Error",
   userNotFound: "User not found",
   unathorized: "Unauthorized",
+  forbidden: "You don't have permission to access this resource",
 };
