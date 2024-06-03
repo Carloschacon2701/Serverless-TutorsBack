@@ -25,6 +25,10 @@ export const Responses = {
     return this._DefineResponse(400, data);
   },
 
+  _401(data = {}) {
+    return this._DefineResponse(401, data);
+  },
+
   _404(data = {}) {
     return this._DefineResponse(404, data);
   },

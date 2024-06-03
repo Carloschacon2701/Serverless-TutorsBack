@@ -1,7 +1,7 @@
 import middy from "@middy/core";
 import jsonBodyParser from "@middy/http-json-body-parser";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import { i18nMiddleware } from "../../../libs/i18n/middleware";
+import { i18nMiddleware } from "../../../middlewares/i18n";
 import { schemaValidator } from "../../../libs/lambda";
 import { number, object } from "yup";
 import i18n from "../../../libs/i18n";

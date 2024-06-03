@@ -4,7 +4,7 @@ import jsonBodyParser from "@middy/http-json-body-parser";
 import { number, object, string } from "yup";
 import { Responses } from "../../../libs/Responses";
 import { schemaValidator } from "../../../libs/lambda";
-import { i18nMiddleware } from "../../../libs/i18n/middleware";
+import { i18nMiddleware } from "../../../middlewares/i18n";
 import i18n from "../../../libs/i18n";
 import { Cognito } from "../../../libs/AWS/Cognito";
 import { UserCreation } from "../../../utils/Interfaces/User";

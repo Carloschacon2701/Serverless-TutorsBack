@@ -1,4 +1,4 @@
-import i18n from "..";
+import i18n from "../../libs/i18n";
 
 interface Handler {
   event: {

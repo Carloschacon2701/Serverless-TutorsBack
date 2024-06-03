@@ -2,7 +2,7 @@ import middy from "@middy/core";
 import jsonBodyParser from "@middy/http-json-body-parser";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import i18n from "../../../libs/i18n";
-import { i18nMiddleware } from "../../../libs/i18n/middleware";
+import { i18nMiddleware } from "../../../middlewares/i18n";
 import { Responses } from "../../../libs/Responses";
 import { initializePrisma } from "../../../utils/prisma";
 import { schemaValidator } from "../../../libs/lambda";

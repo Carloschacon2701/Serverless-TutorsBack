@@ -4,7 +4,7 @@ import { Responses } from "../../../libs/Responses";
 import { initializePrisma } from "../../../utils/prisma";
 import middy from "@middy/core";
 import jsonBodyParser from "@middy/http-json-body-parser";
-import { i18nMiddleware } from "../../../libs/i18n/middleware";
+import { i18nMiddleware } from "../../../middlewares/i18n";
 import { Prisma } from "@prisma/client";
 
 // const i18nString = (key: string) => i18n.t("Subject.find." + key);
@@ -40,7 +40,7 @@ const handler = async (
           },
         },
       },
-      skip: Number(page) - 1 * Number(limit),
+      skip: (Number(page) - 1) * Number(limit),
       take: Number(limit),
       where: whereClause,
     });

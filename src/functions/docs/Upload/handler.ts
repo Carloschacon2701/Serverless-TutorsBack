@@ -4,11 +4,12 @@ import i18n from "../../../libs/i18n";
 import { initializePrisma } from "../../../utils/prisma";
 import middy from "@middy/core";
 import jsonBodyParser from "@middy/http-json-body-parser";
-import { i18nMiddleware } from "../../../libs/i18n/middleware";
+import { i18nMiddleware } from "../../../middlewares/i18n";
 import { schemaValidator } from "../../../libs/lambda";
 import { DocumentCreation } from "../../../utils/Interfaces/Documents";
 import { number, object, string } from "yup";
 import { S3 } from "../../../libs/AWS/S3";
+import { cognitoMiddleware } from "../../../middlewares/JWT";
 
 const i18nString = (key: string) => i18n.t("Docs.upload.validations." + key);
 
@@ -17,8 +18,9 @@ const handler = async (
 ): Promise<APIGatewayProxyResult> => {
   try {
     const prisma = initializePrisma();
-    const body = event.body as unknown as DocumentCreation;
-    const { name, subject } = body;
+    const { body, headers } = event;
+    const { name, subject } = body as unknown as DocumentCreation;
+    const { user } = headers;
 
     const existingSubject = await prisma.subject.findUnique({
       where: { id: subject },
@@ -53,6 +55,7 @@ const handler = async (
 export const upload = middy(handler).use([
   jsonBodyParser(),
   i18nMiddleware(),
+  cognitoMiddleware(),
   schemaValidator({
     body: object({
       name: string().required(() => i18nString("nameRequired")),

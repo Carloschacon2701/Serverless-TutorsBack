@@ -4,6 +4,7 @@ import {
   InitiateAuthCommand,
   SignUpCommand,
 } from "@aws-sdk/client-cognito-identity-provider";
+import { CognitoJwtVerifier } from "aws-jwt-verify";
 
 const client = new CognitoIdentityProviderClient({
   region: process.env.REGION,
@@ -21,10 +22,13 @@ interface Login {
   password: string;
 }
 
+const CLIENT_ID = process.env.COGNITO_CLIENT_ID as string;
+const USER_POOL_ID = process.env.COGNITO_USER_POOL_ID as string;
+
 export const Cognito = {
   async signUp({ email, name, password, role }: SignUp) {
     const command = new SignUpCommand({
-      ClientId: process.env.COGNITO_CLIENT_ID,
+      ClientId: CLIENT_ID,
       Username: email,
       Password: password,
       UserAttributes: [
@@ -47,7 +51,7 @@ export const Cognito = {
 
     const confirmCommand = new AdminConfirmSignUpCommand({
       Username: email,
-      UserPoolId: process.env.COGNITO_USER_POOL_ID,
+      UserPoolId: USER_POOL_ID,
     });
 
     await client.send(confirmCommand);
@@ -58,7 +62,7 @@ export const Cognito = {
   async Login({ email, password }: Login) {
     const command = new InitiateAuthCommand({
       AuthFlow: "USER_PASSWORD_AUTH",
-      ClientId: process.env.COGNITO_CLIENT_ID,
+      ClientId: CLIENT_ID,
       AuthParameters: {
         USERNAME: email,
         PASSWORD: password,
@@ -68,5 +72,21 @@ export const Cognito = {
     const response = await client.send(command);
 
     return response;
+  },
+
+  async verifyToken(token: string) {
+    const verifier = CognitoJwtVerifier.create({
+      userPoolId: USER_POOL_ID,
+      tokenUse: "id",
+      clientId: CLIENT_ID,
+    });
+
+    try {
+      const payload = await verifier.verify(token);
+      return payload;
+    } catch (error) {
+      console.log("Error", error);
+      return null;
+    }
   },
 };

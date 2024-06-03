@@ -80,4 +80,6 @@ export const EN = {
   },
 
   internalServerError: "Internal Server Error",
+
+  unathorized: "Unauthorized",
 };

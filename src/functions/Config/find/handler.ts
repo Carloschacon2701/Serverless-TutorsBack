@@ -3,7 +3,7 @@ import { initializePrisma } from "../../../utils/prisma";
 import middy from "@middy/core";
 import jsonBodyParser from "@middy/http-json-body-parser";
 import { object, string } from "yup";
-import { i18nMiddleware } from "../../../libs/i18n/middleware";
+import { i18nMiddleware } from "../../../middlewares/i18n";
 import { schemaValidator } from "../../../libs/lambda";
 import { Responses } from "../../../libs/Responses";
 import i18n from "../../../libs/i18n";

@@ -88,4 +88,6 @@ export const ES = {
   },
 
   internalServerError: "Error interno del servidor",
+
+  unathorized: "No autorizado",
 };

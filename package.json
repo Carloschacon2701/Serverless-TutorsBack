@@ -34,6 +34,7 @@
     "@prisma/adapter-libsql": "^5.14.0",
     "@prisma/client": "^5.13.0",
     "@types/aws-lambda": "^8.10.137",
+    "aws-jwt-verify": "^4.0.1",
     "i18next": "^23.11.3",
     "yup": "^1.4.0"
   }
