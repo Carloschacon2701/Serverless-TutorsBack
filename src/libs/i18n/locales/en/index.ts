@@ -7,6 +7,8 @@ export const EN = {
       error: "Error creating user",
 
       validations: {
+        careerRequired: "Career is required",
+        careerInvalid: "Career is invalid",
         nameRequired: "Name is required",
         emailRequired: "Email is required",
         roleRequired: "Role is required",
@@ -80,6 +82,6 @@ export const EN = {
   },
 
   internalServerError: "Internal Server Error",
-
+  userNotFound: "User not found",
   unathorized: "Unauthorized",
 };

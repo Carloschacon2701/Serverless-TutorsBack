@@ -18,9 +18,8 @@ const handler = async (
 ): Promise<APIGatewayProxyResult> => {
   try {
     const prisma = initializePrisma();
-    const { body, headers } = event;
+    const { body } = event;
     const { name, subject } = body as unknown as DocumentCreation;
-    const { user } = headers;
 
     const existingSubject = await prisma.subject.findUnique({
       where: { id: subject },
@@ -40,6 +39,23 @@ const handler = async (
         path: key,
         category_id: existingSubject?.category_id,
         subject_id: subject,
+      },
+      select: {
+        category_id: true,
+        subject_id: true,
+        name: true,
+        subject: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
 

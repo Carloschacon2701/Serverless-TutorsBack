@@ -4,6 +4,7 @@ export interface UserCreation {
   role: number;
   description: string;
   password: string;
+  career: number;
 }
 
 export interface UserLogIn {

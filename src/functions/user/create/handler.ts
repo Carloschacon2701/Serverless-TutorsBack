@@ -18,7 +18,7 @@ const handler = async (
   try {
     const prisma = initializePrisma();
     const body = event.body as unknown as UserCreation;
-    const { name, email, role, description, password } = body;
+    const { name, email, role, description, password, career } = body;
 
     const existingUser = await prisma.user.findUnique({
       where: {
@@ -32,6 +32,12 @@ const handler = async (
       },
     });
 
+    const existingCareer = await prisma.career.findUnique({
+      where: {
+        id: career,
+      },
+    });
+
     if (!existingRole) {
       return Responses._400({
         message: i18nString("roleInvalid"),
@@ -41,6 +47,12 @@ const handler = async (
     if (existingUser) {
       return Responses._400({
         message: i18nString("emailExists"),
+      });
+    }
+
+    if (!existingCareer) {
+      return Responses._400({
+        message: i18nString("careerInvalid"),
       });
     }
 
@@ -57,7 +69,11 @@ const handler = async (
         email,
         role_id: role,
         description,
-        career_id: 1,
+        career_id: career,
+      },
+      include: {
+        career: true,
+        role: true,
       },
     });
 
@@ -88,6 +104,7 @@ export const create = middy(handler).use([
         .required(() => i18nString("roleRequired"))
         .oneOf([1, 2], () => i18nString("roleInvalid")),
       description: string().default(""),
+      career: number().required(() => i18nString("careerRequired")),
     }),
   }),
 ]);

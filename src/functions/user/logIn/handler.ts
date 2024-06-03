@@ -29,15 +29,25 @@ const handler = async (
       };
     }
 
-    const result = await Cognito.Login({ email, password });
+    const { AuthenticationResult } = await Cognito.Login({ email, password });
+    const { IdToken, RefreshToken } = AuthenticationResult || {};
 
-    console.log(result);
-
-    return Responses._200({ message: i18n.t("User.logIn.success"), result });
+    return Responses._200({
+      message: i18n.t("User.logIn.success"),
+      IdToken,
+      RefreshToken,
+    });
   } catch (error: any) {
+    console.log("Error", error);
     if (error?.name === "UserNotConfirmedException") {
       return Responses._400({
-        message: i18n.t("User.logIn.validations.userNotConfirmed"),
+        message: i18nString("userNotConfirmed"),
+      });
+    }
+
+    if (error?.name === "NotAuthorizedException") {
+      return Responses._400({
+        message: i18nString("invalidCredentials"),
       });
     }
 
