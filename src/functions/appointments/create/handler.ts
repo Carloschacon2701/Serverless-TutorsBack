@@ -17,27 +17,27 @@ const handler = async (
   try {
     const body = event.body as unknown as ConsultacyCreation;
     const prisma = initializePrisma();
-    const { config = 0, date = "" } = body;
+    const { mentorship = 0, date = "" } = body;
 
     const student = 0;
 
-    const existingConfig = await prisma.config.findUnique({
+    const existingMentorship = await prisma.mentorship.findUnique({
       where: {
-        id: config,
+        id: mentorship,
       },
     });
 
-    if (!existingConfig) {
+    if (!existingMentorship) {
       return Responses._400({
-        message: i18nString("configNotFound"),
+        message: i18nString("mentorshipNotFound"),
       });
     }
 
-    const consultancy = await prisma.consultancies.create({
+    const consultancy = await prisma.appointments.create({
       data: {
         date: new Date(date),
         tutor_id: existingConfig.tutor_id,
-        config_id: config,
+        config_id: mentorship,
         student_id: student,
       },
     });
@@ -54,7 +54,7 @@ export const create = middy(handler).use([
   i18nMiddleware(),
   schemaValidator({
     body: object({
-      config: number().required(),
+      mentorship: number().required(),
       date: date().required(),
     }),
   }),

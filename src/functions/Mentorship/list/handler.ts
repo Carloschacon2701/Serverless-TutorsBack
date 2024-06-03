@@ -19,7 +19,7 @@ const handler = async (
       subject = 0,
     } = event.queryStringParameters ?? {};
 
-    const config = await prisma.config.findMany({
+    const mentorship = await prisma.mentorship.findMany({
       where: {
         tutor_id: tutor ? { equals: Number(tutor) } : undefined,
         category_id: category ? { equals: Number(category) } : undefined,
@@ -27,7 +27,7 @@ const handler = async (
       },
     });
 
-    return Responses._200(config);
+    return Responses._200(mentorship);
   } catch (error) {
     console.error(error);
     return Responses._500({ message: i18n.t("internalServerError"), error });

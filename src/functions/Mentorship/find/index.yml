@@ -1,0 +1,7 @@
+findConfig:
+  handler: src/functions/Mentorship/find/handler.find
+  events:
+    - http:
+        path: mentorship/{id}
+        method: get
+        cors: true

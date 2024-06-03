@@ -53,12 +53,12 @@ functions:
   # updateUser: ${file(src/functions/user/update/index.yml):updateUser}
 
   # CONFIG
-  createConfig: ${file(src/functions/Config/create/index.yml):createConfig}
-  findConfig: ${file(src/functions/Config/find/index.yml):findConfig}
-  listConfig: ${file(src/functions/Config/list/index.yml):listConfig}
+  createConfig: ${file(src/functions/Mentorship/create/index.yml):createConfig}
+  findConfig: ${file(src/functions/Mentorship/find/index.yml):findConfig}
+  listConfig: ${file(src/functions/Mentorship/list/index.yml):listConfig}
 
   # CONSULTANCY
-  createConsultancy: ${file(src/functions/consultancies/create/index.yml):createConsultancy}
+  createConsultancy: ${file(src/functions/appointments/create/index.yml):createConsultancy}
 
   # DOCUMENT
   createDocument: ${file(src/functions/docs/Upload/index.yml):createDocument}

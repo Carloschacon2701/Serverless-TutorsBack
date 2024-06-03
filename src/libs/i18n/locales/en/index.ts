@@ -41,7 +41,7 @@ export const EN = {
     },
   },
 
-  Config: {
+  Mentorship: {
     create: {
       success: "Configuration created successfully",
       validations: {

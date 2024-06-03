@@ -8,10 +8,10 @@ import { schemaValidator } from "../../../libs/lambda";
 import { array, mixed, number, object } from "yup";
 import { initializePrisma } from "../../../utils/prisma";
 import { Roles } from "../../../utils/enums";
-import { ConfigCreation } from "../../../utils/Interfaces/Config";
+import { ConfigCreation } from "../../../utils/Interfaces/Mentorship";
 
 const i18nString = (key: string, options?: object) =>
-  i18n.t("Config.create.validations." + key, { ...options });
+  i18n.t("Mentorship.create.validations." + key, { ...options });
 
 const handler = async (
   event: APIGatewayProxyEvent
@@ -42,7 +42,7 @@ const handler = async (
       return Responses._404({ message: i18nString("tutorNotFound") });
     }
 
-    const existingConfig = await prisma.config.findFirst({
+    const existingConfig = await prisma.mentorship.findFirst({
       where: {
         tutor_id: tutor_id,
         subject_id: subject_id,
@@ -67,7 +67,7 @@ const handler = async (
       return Responses._404({ message: i18nString("currencyNotFound") });
     }
 
-    const newConfig = await prisma.config.create({
+    const newConfig = await prisma.mentorship.create({
       data: {
         hourly_price,
         work_days: {
@@ -83,11 +83,11 @@ const handler = async (
     });
 
     return Responses._200({
-      message: i18n.t("Config.create.success"),
+      message: i18n.t("Mentorship.create.success"),
       newConfig,
     });
   } catch (error) {
-    console.log("Error creating config", error);
+    console.log("Error creating mentorship", error);
 
     return Responses._500({
       message: i18n.t("internalServerError"),

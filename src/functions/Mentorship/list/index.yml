@@ -1,0 +1,7 @@
+listConfig:
+  handler: src/functions/Mentorship/list/handler.list
+  events:
+    - http:
+        path: mentorship
+        method: get
+        cors: true

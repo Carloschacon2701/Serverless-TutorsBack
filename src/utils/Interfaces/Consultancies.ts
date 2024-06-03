@@ -1,5 +1,5 @@
 export interface ConsultacyCreation {
-  config: number;
+  mentorship: number;
   date: string;
   student: number;
 }

@@ -16,49 +16,49 @@ datasource db {
 }
 
 model User {
-  id                    Int             @id @default(autoincrement())
-  name                  String
-  email                 String          @unique
-  role_id               Int
-  role                  Role            @relation(fields: [role_id], references: [id])
-  description           String?
-  config                Config[]
-  consultancies_student Consultancies[] @relation("student_relation")
-  consultancies_tutor   Consultancies[] @relation("tutor_relation")
-  career_id             Int
-  career                Career          @relation(fields: [career_id], references: [id])
+  id                   Int           @id @default(autoincrement())
+  name                 String
+  email                String        @unique
+  role_id              Int
+  role                 Role          @relation(fields: [role_id], references: [id])
+  description          String?
+  mentorship           Mentorship[]
+  appointments_student Appointment[] @relation("student_relation")
+  appointments_tutor   Appointment[] @relation("tutor_relation")
+  career_id            Int
+  career               Career        @relation(fields: [career_id], references: [id])
 }
 
 model Day {
-  id     Int      @id @default(autoincrement())
-  name   String
-  config Config[]
+  id         Int          @id @default(autoincrement())
+  name       String
+  mentorship Mentorship[]
 }
 
-model Config {
-  id            Int             @id @default(autoincrement())
-  work_days     Day[]
-  subject_id    Int
-  subject       Subject         @relation(fields: [subject_id], references: [id])
-  category_id   Int
-  category      Category        @relation(fields: [category_id], references: [id])
-  currency_id   Int
-  currency      Currency        @relation(fields: [currency_id], references: [id])
-  tutor_id      Int
-  tutor         User            @relation(fields: [tutor_id], references: [id])
-  hourly_price  Float
-  consultancies Consultancies[]
+model Mentorship {
+  id           Int           @id @default(autoincrement())
+  work_days    Day[]
+  subject_id   Int
+  subject      Subject       @relation(fields: [subject_id], references: [id])
+  category_id  Int
+  category     Category      @relation(fields: [category_id], references: [id])
+  currency_id  Int
+  currency     Currency      @relation(fields: [currency_id], references: [id])
+  tutor_id     Int
+  tutor        User          @relation(fields: [tutor_id], references: [id])
+  hourly_price Float
+  appointments Appointment[]
 }
 
-model Consultancies {
-  id         Int      @id @default(autoincrement())
+model Appointment {
+  id         Int        @id @default(autoincrement())
   date       DateTime
   student_id Int
-  student    User     @relation("student_relation", fields: [student_id], references: [id])
+  student    User       @relation("student_relation", fields: [student_id], references: [id])
   tutor_id   Int
-  tutor      User     @relation("tutor_relation", fields: [tutor_id], references: [id])
+  tutor      User       @relation("tutor_relation", fields: [tutor_id], references: [id])
   config_id  Int
-  config     Config   @relation(fields: [config_id], references: [id])
+  mentorship Mentorship @relation(fields: [config_id], references: [id])
 }
 
 model Document {
@@ -78,27 +78,27 @@ model Role {
 }
 
 model Currency {
-  id     Int      @id @default(autoincrement())
-  name   String
-  symbol String
-  config Config[]
+  id         Int          @id @default(autoincrement())
+  name       String
+  symbol     String
+  mentorship Mentorship[]
 }
 
 model Subject {
-  id          Int        @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   name        String
   category_id Int
-  Category    Category   @relation(fields: [category_id], references: [id])
-  config      Config[]
+  Category    Category     @relation(fields: [category_id], references: [id])
+  mentorship  Mentorship[]
   Document    Document[]
 }
 
 model Category {
-  id       Int        @id @default(autoincrement())
-  name     String
-  config   Config[]
-  Document Document[]
-  Subject  Subject[]
+  id         Int          @id @default(autoincrement())
+  name       String
+  mentorship Mentorship[]
+  Document   Document[]
+  Subject    Subject[]
 }
 
 model Career {

@@ -1,0 +1,7 @@
+createConfig:
+  handler: src/functions/Mentorship/create/handler.create
+  events:
+    - http:
+        path: mentorship
+        method: post
+        cors: true

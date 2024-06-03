@@ -8,7 +8,7 @@ import { schemaValidator } from "../../../libs/lambda";
 import { Responses } from "../../../libs/Responses";
 import i18n from "../../../libs/i18n";
 
-const i18nString = (key: string) => i18n.t("Config.find.validations" + key);
+const i18nString = (key: string) => i18n.t("Mentorship.find.validations" + key);
 
 const handler = async (
   event: APIGatewayProxyEvent
@@ -18,19 +18,19 @@ const handler = async (
 
     const { id } = event.pathParameters ?? {};
 
-    const config = await prisma.config.findUnique({
+    const mentorship = await prisma.mentorship.findUnique({
       where: {
         id: Number(id),
       },
     });
 
-    if (!config) {
+    if (!mentorship) {
       return Responses._404({
         message: i18nString("configNotFound"),
       });
     }
 
-    return Responses._200(config);
+    return Responses._200(mentorship);
   } catch (error) {
     console.error(error);
     return Responses._500({ message: i18n.t("internalServerError"), error });

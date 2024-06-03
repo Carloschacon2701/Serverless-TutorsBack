@@ -21,6 +21,7 @@ const handler = async (
       where: {
         id: parseInt(id),
       },
+      include: {},
     });
 
     if (!user) {
