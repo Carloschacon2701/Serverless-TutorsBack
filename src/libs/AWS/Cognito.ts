@@ -15,6 +15,7 @@ interface SignUp {
   password: string;
   role: string;
   name: string;
+  id: string;
 }
 
 interface Login {
@@ -26,7 +27,7 @@ const CLIENT_ID = process.env.COGNITO_CLIENT_ID as string;
 const USER_POOL_ID = process.env.COGNITO_USER_POOL_ID as string;
 
 export const Cognito = {
-  async signUp({ email, name, password, role }: SignUp) {
+  async signUp({ email, name, password, role, id }: SignUp) {
     const command = new SignUpCommand({
       ClientId: CLIENT_ID,
       Username: email,
@@ -39,6 +40,10 @@ export const Cognito = {
         {
           Name: "custom:role",
           Value: role,
+        },
+        {
+          Name: "custom:id",
+          Value: id,
         },
         {
           Name: "name",

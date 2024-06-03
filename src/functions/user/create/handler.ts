@@ -56,13 +56,6 @@ const handler = async (
       });
     }
 
-    await Cognito.signUp({
-      email,
-      name,
-      password,
-      role: role.toString(),
-    });
-
     const newUser = await prisma.user.create({
       data: {
         name,
@@ -75,6 +68,14 @@ const handler = async (
         career: true,
         role: true,
       },
+    });
+
+    await Cognito.signUp({
+      email,
+      name,
+      password,
+      role: role.toString(),
+      id: newUser.id.toString(),
     });
 
     return Responses._200({
