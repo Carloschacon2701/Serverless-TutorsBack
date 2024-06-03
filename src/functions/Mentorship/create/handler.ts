@@ -8,7 +8,7 @@ import { schemaValidator } from "../../../libs/lambda";
 import { array, mixed, number, object } from "yup";
 import { initializePrisma } from "../../../utils/prisma";
 import { Roles } from "../../../utils/enums";
-import { ConfigCreation } from "../../../utils/Interfaces/Mentorship";
+import { MentorshipCreation } from "../../../utils/Interfaces/Config";
 
 const i18nString = (key: string, options?: object) =>
   i18n.t("Mentorship.create.validations." + key, { ...options });
@@ -18,7 +18,7 @@ const handler = async (
 ): Promise<APIGatewayProxyResult> => {
   try {
     const prisma = initializePrisma();
-    const body = event.body as unknown as ConfigCreation;
+    const body = event.body as unknown as MentorshipCreation;
     const { work_days, subject_id, tutor_id, currency_id, hourly_price } = body;
 
     const existingSubject = await prisma.subject.findUnique({
@@ -42,16 +42,16 @@ const handler = async (
       return Responses._404({ message: i18nString("tutorNotFound") });
     }
 
-    const existingConfig = await prisma.mentorship.findFirst({
+    const existingMentorship = await prisma.mentorship.findFirst({
       where: {
         tutor_id: tutor_id,
         subject_id: subject_id,
       },
     });
 
-    if (existingConfig) {
+    if (existingMentorship) {
       return Responses._400({
-        message: i18nString("configAlreadyExists", {
+        message: i18nString("mentorshipAlreadyExists", {
           subject_name: existingSubject.name,
         }),
       });
@@ -67,7 +67,7 @@ const handler = async (
       return Responses._404({ message: i18nString("currencyNotFound") });
     }
 
-    const newConfig = await prisma.mentorship.create({
+    const newMentorship = await prisma.mentorship.create({
       data: {
         hourly_price,
         work_days: {
@@ -84,7 +84,7 @@ const handler = async (
 
     return Responses._200({
       message: i18n.t("Mentorship.create.success"),
-      newConfig,
+      data: newMentorship,
     });
   } catch (error) {
     console.log("Error creating mentorship", error);

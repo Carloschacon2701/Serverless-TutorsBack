@@ -1,4 +1,4 @@
-export interface ConfigCreation {
+export interface MentorshipCreation {
   hourly_price: number;
   work_days: number[];
   subject_id: number;

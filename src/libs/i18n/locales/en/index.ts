@@ -43,10 +43,10 @@ export const EN = {
 
   Mentorship: {
     create: {
-      success: "Configuration created successfully",
+      success: "Mentorship created successfully",
       validations: {
         tutorNotFound: "Tutor not found",
-        configAlreadyExists: "A configuration for this subject already exists",
+        mentorshipAlreadyExists: "A mentorship for this subject already exists",
         currencyNotFound: "Currency not found",
         hourlyPriceRequired: "Hourly price is required",
         workDaysRequired: "Work days are required",
@@ -59,7 +59,7 @@ export const EN = {
 
     find: {
       validations: {
-        configNotFound: "Configuration not found",
+        mentorshipNotFound: "Mentorship not found",
       },
     },
   },

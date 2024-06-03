@@ -33,10 +33,10 @@ const handler = async (
       });
     }
 
-    const consultancy = await prisma.appointments.create({
+    const consultancy = await prisma.appointment.create({
       data: {
         date: new Date(date),
-        tutor_id: existingConfig.tutor_id,
+        tutor_id: existingMentorship.tutor_id,
         config_id: mentorship,
         student_id: student,
       },
