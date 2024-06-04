@@ -32,6 +32,7 @@ const handler = async (
     if (!existingSubject) {
       return Responses._404({ message: i18nString("subjectNotFound") });
     }
+    console.log(cognitoUser);
 
     const existingMentorship = await prisma.mentorship.findFirst({
       where: {

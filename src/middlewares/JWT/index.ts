@@ -22,7 +22,6 @@ export const cognitoMiddleware = (validRoles?: number[]) => {
       const parsedToken = token.substring(7);
 
       const result = await Cognito.verifyToken(parsedToken);
-      const role = (result?.["custom:role"] as number) || 0;
 
       if (!result) {
         return Responses._401({ message: i18n.t("unauthorized") });
@@ -36,7 +35,7 @@ export const cognitoMiddleware = (validRoles?: number[]) => {
         return Responses._404({ message: i18n.t("userNotFound") });
       }
 
-      if (validRoles && !validRoles.includes(role)) {
+      if (validRoles && !validRoles.includes(user.role_id)) {
         return Responses._403({ message: i18n.t("forbidden") });
       }
 

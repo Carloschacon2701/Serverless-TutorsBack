@@ -1,5 +1,6 @@
 import {
   AdminConfirmSignUpCommand,
+  AdminUpdateUserAttributesCommand,
   CognitoIdentityProviderClient,
   InitiateAuthCommand,
   SignUpCommand,
@@ -16,6 +17,11 @@ interface SignUp {
   role: string;
   name: string;
   id: string;
+}
+
+interface Update {
+  email: string;
+  role: string;
 }
 
 interface Login {
@@ -93,5 +99,22 @@ export const Cognito = {
       console.log("Error", error);
       return null;
     }
+  },
+
+  async updateAttributes({ email, role }: Update) {
+    const command = new AdminUpdateUserAttributesCommand({
+      UserPoolId: USER_POOL_ID,
+      Username: email,
+      UserAttributes: [
+        {
+          Name: "custom:role",
+          Value: role,
+        },
+      ],
+    });
+
+    const response = await client.send(command);
+
+    return response;
   },
 };
