@@ -1,4 +1,4 @@
-createConfig:
+createMentorship:
   handler: src/functions/Mentorship/create/handler.create
   events:
     - http:

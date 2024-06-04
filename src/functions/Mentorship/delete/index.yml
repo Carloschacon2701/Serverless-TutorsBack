@@ -1,0 +1,7 @@
+deleteMentorship:
+  handler: src/functions/Mentorship/delete/index.handler
+  events:
+    - http:
+        path: mentorship/{id}
+        method: delete
+        cors: true

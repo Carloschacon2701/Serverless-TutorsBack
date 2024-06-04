@@ -1,4 +1,4 @@
-listConfig:
+listMentorship:
   handler: src/functions/Mentorship/list/handler.list
   events:
     - http:

@@ -55,6 +55,13 @@ export const ES = {
         tutorIdRequired: "El ID del tutor es requerido",
         currencyIdRequired: "El ID de la moneda es requerido",
       },
+
+      delete: {
+        success: "Mentoria eliminada exitosamente",
+        validations: {
+          mentorshipIdRequired: "El ID de la mentoria es requerido",
+        },
+      },
     },
 
     find: {

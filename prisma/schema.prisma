@@ -51,14 +51,14 @@ model Mentorship {
 }
 
 model Appointment {
-  id         Int        @id @default(autoincrement())
-  date       DateTime
-  student_id Int
-  student    User       @relation("student_relation", fields: [student_id], references: [id])
-  tutor_id   Int
-  tutor      User       @relation("tutor_relation", fields: [tutor_id], references: [id])
-  config_id  Int
-  mentorship Mentorship @relation(fields: [config_id], references: [id])
+  id            Int        @id @default(autoincrement())
+  date          DateTime
+  student_id    Int
+  student       User       @relation("student_relation", fields: [student_id], references: [id])
+  tutor_id      Int
+  tutor         User       @relation("tutor_relation", fields: [tutor_id], references: [id])
+  mentorship_id Int
+  mentorship    Mentorship @relation(fields: [mentorship_id], references: [id])
 }
 
 model Document {

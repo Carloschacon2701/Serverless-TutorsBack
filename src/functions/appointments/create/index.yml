@@ -1,4 +1,4 @@
-createConsultancy:
+createAppointment:
   handler: src/functions/appointments/create/handler.create
   events:
     - http:

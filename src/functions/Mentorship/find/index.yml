@@ -1,4 +1,4 @@
-findConfig:
+findMentorship:
   handler: src/functions/Mentorship/find/handler.find
   events:
     - http:

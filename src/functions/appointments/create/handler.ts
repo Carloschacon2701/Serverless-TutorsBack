@@ -37,7 +37,7 @@ const handler = async (
       data: {
         date: new Date(date),
         tutor_id: existingMentorship.tutor_id,
-        config_id: mentorship,
+        mentorship_id: mentorship,
         student_id: student,
       },
       include: {

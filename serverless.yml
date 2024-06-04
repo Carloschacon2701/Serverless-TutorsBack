@@ -52,13 +52,14 @@ functions:
   loginUser: ${file(src/functions/user/logIn/index.yml):userLogin}
   updateUser: ${file(src/functions/user/update/index.yml):updateUser}
 
-  # CONFIG
-  createConfig: ${file(src/functions/Mentorship/create/index.yml):createConfig}
-  findConfig: ${file(src/functions/Mentorship/find/index.yml):findConfig}
-  listConfig: ${file(src/functions/Mentorship/list/index.yml):listConfig}
+  # MENTORSHIP
+  createMentorship: ${file(src/functions/Mentorship/create/index.yml):createMentorship}
+  findMentorship: ${file(src/functions/Mentorship/find/index.yml):findMentorship}
+  listMentorship: ${file(src/functions/Mentorship/list/index.yml):listMentorship}
+  deleteMentorship: ${file(src/functions/Mentorship/delete/index.yml):deleteMentorship}
 
-  # CONSULTANCY
-  createConsultancy: ${file(src/functions/appointments/create/index.yml):createConsultancy}
+  # APPOINTMENTS
+  createAppointment: ${file(src/functions/appointments/create/index.yml):createAppointment}
 
   # DOCUMENT
   createDocument: ${file(src/functions/docs/Upload/index.yml):createDocument}
