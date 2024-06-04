@@ -5,7 +5,7 @@ import jsonBodyParser from "@middy/http-json-body-parser";
 import { i18nMiddleware } from "../../../middlewares/i18n";
 import { schemaValidator } from "../../../libs/lambda";
 import { date, number, object } from "yup";
-import { ConsultacyCreation } from "../../../utils/Interfaces/Consultancies";
+import { ConsultacyCreation } from "../../../utils/Interfaces/Appointments";
 import i18n from "../../../libs/i18n";
 import { initializePrisma } from "../../../utils/prisma";
 

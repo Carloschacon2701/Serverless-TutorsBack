@@ -55,11 +55,12 @@ export const EN = {
         tutorIdRequired: "Tutor ID is required",
         currencyIdRequired: "Currency ID is required",
       },
-      delete: {
-        success: "Mentorship deleted successfully",
-        validations: {
-          mentorshipIdRequired: "Mentorship ID is required",
-        },
+    },
+    delete: {
+      success: "Mentorship deleted successfully",
+      validations: {
+        mentorshipNotFound: "Mentorship not found",
+        mentorshipIdRequired: "Mentorship ID is required",
       },
     },
 

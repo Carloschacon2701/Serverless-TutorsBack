@@ -1,4 +1,3 @@
-import { CognitoIdTokenPayload } from "aws-jwt-verify/jwt-model";
 import { Cognito } from "../../libs/AWS/Cognito";
 import { Responses } from "../../libs/Responses";
 import i18n from "../../libs/i18n";
@@ -8,7 +7,7 @@ interface Handler {
   event: {
     headers: {
       Authorization: string;
-      user: CognitoIdTokenPayload;
+      user_id: string;
     };
     body: any;
   };
@@ -18,7 +17,8 @@ export const cognitoMiddleware = (validRoles?: number[]) => {
   return {
     before: async (handler: Handler) => {
       const prisma = initializePrisma();
-      const token = handler.event.headers["Authorization"] || "";
+      const { body = {}, headers } = handler.event;
+      const token = headers["Authorization"] || "";
       const parsedToken = token.substring(7);
 
       const result = await Cognito.verifyToken(parsedToken);
@@ -39,7 +39,12 @@ export const cognitoMiddleware = (validRoles?: number[]) => {
         return Responses._403({ message: i18n.t("forbidden") });
       }
 
-      handler.event.body.userCognito = user;
+      console.log(body);
+      if (body) {
+        body.userCognito = user;
+      } else {
+        headers["user_id"] = user.id.toString();
+      }
     },
   };
 };

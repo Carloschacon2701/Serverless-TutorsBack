@@ -7,7 +7,7 @@ import { i18nMiddleware } from "../../../middlewares/i18n";
 import { schemaValidator } from "../../../libs/lambda";
 import { array, mixed, number, object } from "yup";
 import { initializePrisma } from "../../../utils/prisma";
-import { MentorshipCreation } from "../../../utils/Interfaces/Config";
+import { MentorshipCreation } from "../../../utils/Interfaces/Mentorship";
 import { cognitoMiddleware } from "../../../middlewares/JWT";
 import { Roles } from "../../../utils/enums";
 
@@ -20,7 +20,7 @@ const handler = async (
   try {
     const prisma = initializePrisma();
     const body = event.body as unknown as MentorshipCreation;
-    const { work_days, subject_id, currency_id, hourly_price, cognitoUser } =
+    const { work_days, subject_id, currency_id, hourly_price, userCognito } =
       body;
 
     const existingSubject = await prisma.subject.findUnique({
@@ -32,11 +32,10 @@ const handler = async (
     if (!existingSubject) {
       return Responses._404({ message: i18nString("subjectNotFound") });
     }
-    console.log(cognitoUser);
 
     const existingMentorship = await prisma.mentorship.findFirst({
       where: {
-        tutor_id: cognitoUser.id,
+        tutor_id: userCognito.id,
         subject_id: subject_id,
       },
     });
@@ -69,8 +68,14 @@ const handler = async (
         },
         subject_id,
         category_id: existingSubject.category_id,
-        tutor_id: cognitoUser.id,
+        tutor_id: userCognito.id,
         currency_id,
+      },
+
+      include: {
+        work_days: true,
+        currency: true,
+        subject: true,
       },
     });
 

@@ -7,6 +7,7 @@ import { Responses } from "../../../libs/Responses";
 import { initializePrisma } from "../../../utils/prisma";
 import { schemaValidator } from "../../../libs/lambda";
 import { number, object } from "yup";
+import { Prisma } from "@prisma/client";
 
 const handler = async (
   event: APIGatewayProxyEvent
@@ -14,20 +15,44 @@ const handler = async (
   try {
     const prisma = initializePrisma();
     const {
-      tutor = 0,
-      category = 0,
-      subject = 0,
+      tutor,
+      category,
+      subject,
+      page = 1,
+      limit = 10,
     } = event.queryStringParameters ?? {};
 
+    let whereClause: Prisma.MentorshipWhereInput = {};
+
+    if (tutor) {
+      whereClause.tutor_id = Number(tutor);
+    }
+
+    if (category) {
+      whereClause.category_id = Number(category);
+    }
+
+    if (subject) {
+      whereClause.subject_id = Number(subject);
+    }
+
     const mentorship = await prisma.mentorship.findMany({
-      where: {
-        tutor_id: tutor ? { equals: Number(tutor) } : undefined,
-        category_id: category ? { equals: Number(category) } : undefined,
-        subject_id: subject ? { equals: Number(subject) } : undefined,
+      skip: (Number(page) - 1) * Number(limit),
+      take: Number(limit),
+      where: whereClause,
+      include: {
+        subject: true,
+        currency: true,
+        tutor: true,
+        work_days: true,
       },
     });
 
-    return Responses._200(mentorship);
+    const count = await prisma.mentorship.count({
+      where: whereClause,
+    });
+
+    return Responses._200({ data: mentorship, count });
   } catch (error) {
     console.error(error);
     return Responses._500({ message: i18n.t("internalServerError"), error });
@@ -42,6 +67,8 @@ export const list = middy(handler).use([
       tutor: number().optional(),
       category: number().optional(),
       subject: number().optional(),
+      page: number().optional(),
+      limit: number().optional(),
     }),
   }),
 ]);

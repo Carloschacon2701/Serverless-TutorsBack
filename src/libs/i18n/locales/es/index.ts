@@ -59,6 +59,7 @@ export const ES = {
       delete: {
         success: "Mentoria eliminada exitosamente",
         validations: {
+          mentorshipNotFound: "Mentoria no encontrada",
           mentorshipIdRequired: "El ID de la mentoria es requerido",
         },
       },
