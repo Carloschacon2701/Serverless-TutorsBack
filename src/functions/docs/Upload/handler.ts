@@ -26,7 +26,7 @@ const handler = async (
     });
 
     if (!existingSubject) {
-      return Responses._404({ message: i18n.t("subjectNotFound") });
+      return Responses._404({ errors: [i18n.t("subjectNotFound")] });
     }
 
     const key = "documents/" + name;
@@ -60,11 +60,9 @@ const handler = async (
     });
 
     return Responses._200({ presignedURL, key, doc });
-
-    return Responses._200({ message: "Hello World" });
   } catch (error) {
     console.log(error);
-    return Responses._500({ message: i18n.t("internalServerError"), error });
+    return Responses._500({ errors: [i18n.t("internalServerError")], error });
   }
 };
 

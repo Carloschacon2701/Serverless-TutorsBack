@@ -1,0 +1,7 @@
+findCareer:
+  handler: src/functions/Career/find/handler.find
+  events:
+    - http:
+        path: career/{id}
+        method: get
+        cors: true

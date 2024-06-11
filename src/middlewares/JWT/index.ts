@@ -24,7 +24,7 @@ export const cognitoMiddleware = (validRoles?: number[]) => {
       const result = await Cognito.verifyToken(parsedToken);
 
       if (!result) {
-        return Responses._401({ message: i18n.t("unauthorized") });
+        return Responses._401({ errors: [i18n.t("unauthorized")] });
       }
 
       const user = await prisma.user.findUnique({
@@ -32,11 +32,11 @@ export const cognitoMiddleware = (validRoles?: number[]) => {
       });
 
       if (!user) {
-        return Responses._404({ message: i18n.t("userNotFound") });
+        return Responses._404({ errors: [i18n.t("userNotFound")] });
       }
 
       if (validRoles && !validRoles.includes(user.role_id)) {
-        return Responses._403({ message: i18n.t("forbidden") });
+        return Responses._403({ errors: [i18n.t("forbidden")] });
       }
 
       console.log(body);

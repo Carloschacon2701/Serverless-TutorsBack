@@ -33,14 +33,14 @@ const handler = async (
 
     if (!mentorship) {
       return Responses._404({
-        message: i18nString("mentorshipNotFound"),
+        errors: [i18nString("mentorshipNotFound")],
       });
     }
 
     return Responses._200({ data: mentorship });
   } catch (error) {
     console.error(error);
-    return Responses._500({ message: i18n.t("internalServerError"), error });
+    return Responses._500({ errors: [i18n.t("internalServerError")], error });
   }
 };
 

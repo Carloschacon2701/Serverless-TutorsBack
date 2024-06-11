@@ -34,7 +34,7 @@ const handler = async (
     return Responses._200({ data: user });
   } catch (error) {
     console.log(error);
-    return Responses._500({ message: i18n.t("internalServerError"), error });
+    return Responses._500({ errors: [i18n.t("internalServerError")], error });
   }
 };
 

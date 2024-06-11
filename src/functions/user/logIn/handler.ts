@@ -23,10 +23,9 @@ const handler = async (
     const user = await prisma.user.findUnique({ where: { email } });
 
     if (!user) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ message: i18nString("invalidCredentials") }),
-      };
+      return Responses._400({
+        errors: [i18nString("invalidCredentials")],
+      });
     }
 
     const { AuthenticationResult } = await Cognito.Login({ email, password });
@@ -41,19 +40,19 @@ const handler = async (
     console.log("Error", error);
     if (error?.name === "UserNotConfirmedException") {
       return Responses._400({
-        message: i18nString("userNotConfirmed"),
+        errors: [i18nString("userNotConfirmed")],
       });
     }
 
     if (error?.name === "NotAuthorizedException") {
       return Responses._400({
-        message: i18nString("invalidCredentials"),
+        errors: [i18nString("invalidCredentials")],
       });
     }
 
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: i18n.t("internalServerError"), error }),
+      body: JSON.stringify({ errors: [i18n.t("internalServerError")], error }),
     };
   }
 };

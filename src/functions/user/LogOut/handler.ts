@@ -25,7 +25,7 @@ const handler = async (
     console.log("Error", error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: i18n.t("internalServerError"), error }),
+      body: JSON.stringify({ errors: [i18n.t("internalServerError")], error }),
     };
   }
 };

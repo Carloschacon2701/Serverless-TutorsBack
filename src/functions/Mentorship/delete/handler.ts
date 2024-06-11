@@ -29,7 +29,7 @@ const handler = async (
 
     if (!mentorship) {
       return Responses._404({
-        message: i18nString("validations.mentorshipNotFound"),
+        errors: [i18nString("validations.mentorshipNotFound")],
       });
     }
 
@@ -49,10 +49,10 @@ const handler = async (
 
     await prisma.$transaction([deleteAppointments, deleteMentorship]);
 
-    return Responses._200({ message: i18nString("success") });
+    return Responses._200({ message: [i18nString("success")] });
   } catch (error) {
     console.log(error);
-    return Responses._500({ message: i18n.t("internalServerError"), error });
+    return Responses._500({ errors: [i18n.t("internalServerError")], error });
   }
 };
 

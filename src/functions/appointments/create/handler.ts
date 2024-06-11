@@ -29,7 +29,7 @@ const handler = async (
 
     if (!existingMentorship) {
       return Responses._400({
-        message: i18nString("mentorshipNotFound"),
+        errors: [i18nString("mentorshipNotFound")],
       });
     }
 
@@ -50,7 +50,7 @@ const handler = async (
     return Responses._201({ data: appointment });
   } catch (error) {
     console.log(error);
-    return Responses._500({ message: i18n.t("internalServerError"), error });
+    return Responses._500({ errors: [i18n.t("internalServerError")], error });
   }
 };
 

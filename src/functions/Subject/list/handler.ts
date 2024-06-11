@@ -52,7 +52,7 @@ const handler = async (
     return Responses._200({ data: subjects, count });
   } catch (error) {
     console.log("Error", error);
-    return Responses._500({ message: i18n.t("internalServerError"), error });
+    return Responses._500({ errors: [i18n.t("internalServerError")], error });
   }
 };
 

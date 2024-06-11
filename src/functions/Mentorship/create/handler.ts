@@ -30,7 +30,7 @@ const handler = async (
     });
 
     if (!existingSubject) {
-      return Responses._404({ message: i18nString("subjectNotFound") });
+      return Responses._404({ errors: [i18nString("subjectNotFound")] });
     }
 
     const existingMentorship = await prisma.mentorship.findFirst({
@@ -42,9 +42,11 @@ const handler = async (
 
     if (existingMentorship) {
       return Responses._400({
-        message: i18nString("mentorshipAlreadyExists", {
-          subject_name: existingSubject.name,
-        }),
+        errors: [
+          i18nString("mentorshipAlreadyExists", {
+            subject_name: existingSubject.name,
+          }),
+        ],
       });
     }
 
@@ -55,7 +57,7 @@ const handler = async (
     });
 
     if (!existingCurrency) {
-      return Responses._404({ message: i18nString("currencyNotFound") });
+      return Responses._404({ errors: [i18nString("currencyNotFound")] });
     }
 
     const newMentorship = await prisma.mentorship.create({
@@ -87,7 +89,7 @@ const handler = async (
     console.log("Error creating mentorship", error);
 
     return Responses._500({
-      message: i18n.t("internalServerError"),
+      errors: [i18n.t("internalServerError")],
       error: error,
     });
   }

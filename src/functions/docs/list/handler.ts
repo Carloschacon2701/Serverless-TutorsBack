@@ -26,7 +26,7 @@ const handler = async (
 
     if (!subject)
       return Responses._404({
-        message: i18nString("validations.subjectNotFound"),
+        errors: [i18nString("validations.subjectNotFound")],
       });
 
     const list = await prisma.document.findMany({
@@ -52,7 +52,7 @@ const handler = async (
     return Responses._200({ data: list, count });
   } catch (error) {
     console.log("Error", error);
-    return Responses._500({ message: i18n.t("internalServerError"), error });
+    return Responses._500({ errors: [i18n.t("internalServerError")], error });
   }
 };
 

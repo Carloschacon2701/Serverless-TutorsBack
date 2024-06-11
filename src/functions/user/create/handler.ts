@@ -40,19 +40,19 @@ const handler = async (
 
     if (!existingRole) {
       return Responses._400({
-        message: i18nString("roleInvalid"),
+        errors: [i18nString("roleInvalid")],
       });
     }
 
     if (existingUser) {
       return Responses._400({
-        message: i18nString("emailExists"),
+        errors: [i18nString("emailExists")],
       });
     }
 
     if (!existingCareer) {
       return Responses._400({
-        message: i18nString("careerInvalid"),
+        errors: [i18nString("careerInvalid")],
       });
     }
 
@@ -79,13 +79,13 @@ const handler = async (
     });
 
     return Responses._200({
-      message: i18n.t("User.newUser.success"),
+      errors: [i18n.t("User.newUser.success")],
       user: newUser,
     });
   } catch (error) {
     console.log(error);
     return Responses._500({
-      message: i18n.t("internalServerError"),
+      errors: [i18n.t("internalServerError")],
       error: error,
     });
   }

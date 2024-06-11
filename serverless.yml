@@ -77,6 +77,10 @@ functions:
   findSubject: ${file(src/functions/Subject/find/index.yml):findSubject}
   listSubject: ${file(src/functions/Subject/list/index.yml):listSubject}
 
+  #Career
+  findCareer: ${file(src/functions/Career/find/index.yml):findCareer}
+  listCareer: ${file(src/functions/Career/list/index.yml):listCareer}
+
 plugins:
   - serverless-offline
   - serverless-prune-plugin

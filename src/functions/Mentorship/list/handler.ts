@@ -55,7 +55,7 @@ const handler = async (
     return Responses._200({ data: mentorship, count });
   } catch (error) {
     console.error(error);
-    return Responses._500({ message: i18n.t("internalServerError"), error });
+    return Responses._500({ errors: [i18n.t("internalServerError")], error });
   }
 };
 

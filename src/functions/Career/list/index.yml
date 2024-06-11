@@ -1,0 +1,7 @@
+listCareer:
+  handler: src/functions/Career/list/handler.list
+  events:
+    - http:
+        path: career
+        method: get
+        cors: true

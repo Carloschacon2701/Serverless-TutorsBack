@@ -28,11 +28,11 @@ const handler = async (
     });
 
     if (!subject)
-      return Responses._404({ message: i18nString("validations.notFound") });
+      return Responses._404({ errors: [i18nString("validations.notFound")] });
 
     return Responses._200({ data: subject });
   } catch (error) {
-    return Responses._500({ message: i18n.t("internalServerError"), error });
+    return Responses._500({ errors: [i18n.t("internalServerError")], error });
   }
 };
 
