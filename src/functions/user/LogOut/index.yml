@@ -1,0 +1,7 @@
+userLogOut:
+  handler: src/functions/user/LogOut/handler.logOut
+  events:
+    - http:
+        path: user/logout
+        method: post
+        cors: true

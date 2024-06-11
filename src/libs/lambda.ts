@@ -5,6 +5,7 @@ interface Request {
     body?: any;
     queryStringParameters?: any;
     pathParameters?: any;
+    headers?: any;
   };
 }
 
@@ -12,10 +13,12 @@ export const schemaValidator = (schema: {
   body?: Schema;
   pathParameters?: Schema;
   queryStringParameters?: Schema;
+  headers?: Schema;
 }) => {
   const before = async (request: Request) => {
     try {
-      const { body, queryStringParameters, pathParameters } = request.event;
+      const { body, queryStringParameters, pathParameters, headers } =
+        request.event;
 
       if (schema.body) {
         schema.body.validateSync(body);
@@ -27,6 +30,10 @@ export const schemaValidator = (schema: {
 
       if (schema.pathParameters) {
         schema.pathParameters.validateSync(pathParameters ?? {});
+      }
+
+      if (schema.headers) {
+        schema.headers.validateSync(headers ?? {});
       }
 
       return Promise.resolve();

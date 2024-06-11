@@ -21,6 +21,13 @@ export const ES = {
       },
     },
 
+    logOut: {
+      success: "Usuario deslogueado exitosamente",
+      validations: {
+        tokenRequired: "El Token de acceso es requerido",
+      },
+    },
+
     logIn: {
       success: "Usuario logueado exitosamente",
       validations: {

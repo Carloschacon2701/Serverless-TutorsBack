@@ -2,6 +2,7 @@ import {
   AdminConfirmSignUpCommand,
   AdminUpdateUserAttributesCommand,
   CognitoIdentityProviderClient,
+  GlobalSignOutCommand,
   InitiateAuthCommand,
   SignUpCommand,
 } from "@aws-sdk/client-cognito-identity-provider";
@@ -99,6 +100,16 @@ export const Cognito = {
       console.log("Error", error);
       return null;
     }
+  },
+
+  async SignOut(token: string) {
+    const command = new GlobalSignOutCommand({
+      AccessToken: token,
+    });
+
+    const response = await client.send(command);
+
+    return response;
   },
 
   async updateAttributes({ email, role }: Update) {

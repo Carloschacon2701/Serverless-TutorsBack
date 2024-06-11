@@ -20,6 +20,12 @@ export const EN = {
         idRequired: "ID is required",
       },
     },
+    logOut: {
+      success: "User logged out successfully",
+      validations: {
+        tokenRequired: "Access token is required",
+      },
+    },
 
     logIn: {
       success: "User logged in successfully",
