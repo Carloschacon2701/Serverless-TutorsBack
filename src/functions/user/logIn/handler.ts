@@ -29,12 +29,13 @@ const handler = async (
     }
 
     const { AuthenticationResult } = await Cognito.Login({ email, password });
-    const { IdToken, RefreshToken } = AuthenticationResult || {};
+    const { IdToken, RefreshToken, AccessToken } = AuthenticationResult || {};
 
     return Responses._200({
       message: i18n.t("User.logIn.success"),
       IdToken,
       RefreshToken,
+      AccessToken,
     });
   } catch (error: any) {
     console.log("Error", error);
