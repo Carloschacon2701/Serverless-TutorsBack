@@ -5,6 +5,7 @@ import middy from "@middy/core";
 import jsonBodyParser from "@middy/http-json-body-parser";
 import { i18nMiddleware } from "../../../middlewares/i18n";
 import { initializePrisma } from "../../../utils/prisma";
+import { calculatePages } from "../../../utils/functions";
 
 const handler = async (
   event: APIGatewayProxyEvent
@@ -30,7 +31,9 @@ const handler = async (
 
     const count = await prisma.category.count();
 
-    return Responses._200({ data: categories, count });
+    const pages = calculatePages(count, Number(limit), Number(page));
+
+    return Responses._200({ data: categories, count, pages });
   } catch (error) {
     console.log("Error", error);
     return Responses._500({ errors: [i18n.t("internalServerError")], error });

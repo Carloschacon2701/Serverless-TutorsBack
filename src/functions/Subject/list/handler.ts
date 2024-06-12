@@ -6,6 +6,7 @@ import middy from "@middy/core";
 import jsonBodyParser from "@middy/http-json-body-parser";
 import { i18nMiddleware } from "../../../middlewares/i18n";
 import { Prisma } from "@prisma/client";
+import { calculatePages } from "../../../utils/functions";
 
 // const i18nString = (key: string) => i18n.t("Subject.find." + key);
 
@@ -49,7 +50,9 @@ const handler = async (
       where: whereClause,
     });
 
-    return Responses._200({ data: subjects, count });
+    const pages = calculatePages(count, Number(limit), Number(page));
+
+    return Responses._200({ data: subjects, count, pages });
   } catch (error) {
     console.log("Error", error);
     return Responses._500({ errors: [i18n.t("internalServerError")], error });

@@ -8,6 +8,7 @@ import { initializePrisma } from "../../../utils/prisma";
 import { schemaValidator } from "../../../libs/lambda";
 import { number, object } from "yup";
 import { Prisma } from "@prisma/client";
+import { calculatePages } from "../../../utils/functions";
 
 const handler = async (
   event: APIGatewayProxyEvent
@@ -52,7 +53,9 @@ const handler = async (
       where: whereClause,
     });
 
-    return Responses._200({ data: mentorship, count });
+    const pages = calculatePages(count, Number(limit), Number(page));
+
+    return Responses._200({ data: mentorship, count, pages });
   } catch (error) {
     console.error(error);
     return Responses._500({ errors: [i18n.t("internalServerError")], error });

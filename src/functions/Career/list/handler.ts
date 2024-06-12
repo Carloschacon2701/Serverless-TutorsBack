@@ -5,6 +5,7 @@ import jsonBodyParser from "@middy/http-json-body-parser";
 import { i18nMiddleware } from "../../../middlewares/i18n";
 import { Responses } from "../../../libs/Responses";
 import i18n from "../../../libs/i18n";
+import { calculatePages } from "../../../utils/functions";
 
 export const handler = async (
   _event: APIGatewayProxyEvent
@@ -21,7 +22,9 @@ export const handler = async (
 
     const count = await prisma.career.count();
 
-    return Responses._200({ data: careers, count });
+    const pages = calculatePages(count, Number(limit), Number(page));
+
+    return Responses._200({ data: careers, count, pages });
   } catch (error) {
     console.log(error);
 

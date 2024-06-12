@@ -7,6 +7,7 @@ import { schemaValidator } from "../../../libs/lambda";
 import { number, object } from "yup";
 import { initializePrisma } from "../../../utils/prisma";
 import i18n from "../../../libs/i18n";
+import { calculatePages } from "../../../utils/functions";
 
 const i18nString = (key: string) => i18n.t("Document.find." + key);
 
@@ -49,7 +50,9 @@ const handler = async (
       },
     });
 
-    return Responses._200({ data: list, count });
+    const pages = calculatePages(count, Number(limit), Number(page));
+
+    return Responses._200({ data: list, count, pages });
   } catch (error) {
     console.log("Error", error);
     return Responses._500({ errors: [i18n.t("internalServerError")], error });
