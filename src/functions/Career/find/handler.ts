@@ -18,7 +18,7 @@ const handler = async (
 
     const career = await prisma.career.findUnique({
       where: {
-        id: Number(id),
+        id: Number(career_id),
       },
     });
 
