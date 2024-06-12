@@ -14,7 +14,7 @@ const handler = async (
   try {
     const prisma = initializePrisma();
     const { pathParameters } = event;
-    const { id = 0 } = pathParameters || {};
+    const { career_id = 0 } = pathParameters || {};
 
     const career = await prisma.career.findUnique({
       where: {
