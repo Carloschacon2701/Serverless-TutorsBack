@@ -16,11 +16,11 @@ const handler = async (
   try {
     const prisma = initializePrisma();
     const { pathParameters } = event;
-    const { id = 0 } = pathParameters || {};
+    const { subject_id = 0 } = pathParameters || {};
 
     const subject = await prisma.subject.findUnique({
       where: {
-        id: Number(id),
+        id: Number(subject_id),
       },
       include: {
         Category: true,

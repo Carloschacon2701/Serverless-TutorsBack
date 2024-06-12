@@ -15,11 +15,11 @@ const handler = async (
 ): Promise<APIGatewayProxyResult> => {
   try {
     const prisma = initializePrisma();
-    const { id } = event.pathParameters as { id: string };
+    const { user_id } = event.pathParameters as { user_id: string };
 
     const user = await prisma.user.findUnique({
       where: {
-        id: parseInt(id),
+        id: parseInt(user_id),
       },
       include: {
         career: true,

@@ -2,6 +2,6 @@ findCategory:
   handler: src/functions/Category/find/handler.find
   events:
     - http:
-        path: category/{id}
+        path: category/{category_id}
         method: get
         cors: true

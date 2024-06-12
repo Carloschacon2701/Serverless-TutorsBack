@@ -2,6 +2,6 @@ findMentorship:
   handler: src/functions/Mentorship/find/handler.find
   events:
     - http:
-        path: mentorship/{id}
+        path: mentorship/{mentorship_id}
         method: get
         cors: true

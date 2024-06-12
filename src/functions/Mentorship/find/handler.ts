@@ -17,11 +17,11 @@ const handler = async (
   try {
     const prisma = initializePrisma();
 
-    const { id } = event.pathParameters ?? {};
+    const { mentorship_id } = event.pathParameters ?? {};
 
     const mentorship = await prisma.mentorship.findUnique({
       where: {
-        id: Number(id),
+        id: Number(mentorship_id),
       },
       include: {
         subject: true,

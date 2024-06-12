@@ -2,6 +2,6 @@ findUser:
   handler: src/functions/user/find/handler.find
   events:
     - http:
-        path: user/{id}
+        path: user/{user_id}
         method: get
         cors: true
