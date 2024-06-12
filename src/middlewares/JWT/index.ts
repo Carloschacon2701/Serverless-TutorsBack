@@ -39,7 +39,6 @@ export const cognitoMiddleware = (validRoles?: number[]) => {
         return Responses._403({ errors: [i18n.t("forbidden")] });
       }
 
-      console.log(body);
       if (body) {
         body.userCognito = user;
       } else {

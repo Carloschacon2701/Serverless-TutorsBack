@@ -15,8 +15,9 @@ const handler = async (
 ): Promise<APIGatewayProxyResult> => {
   try {
     const token = event.headers.Authorization as string;
+    const parsedToken = token.substring(7);
 
-    await Cognito.SignOut(token);
+    await Cognito.SignOut(parsedToken);
 
     return Responses._200({
       message: i18nString("success"),
