@@ -18,6 +18,11 @@ export const ES = {
         passwordRequired: "La Contraseña es requerida",
         userNotFound: "Usuario no encontrado",
         idRequired: "ID es requerido",
+        passwordMayus: "La contraseña debe contener al menos una mayúscula",
+        passwordNumber: "La contraseña debe contener al menos un número",
+        passwordSpecial:
+          "La contraseña debe contener al menos un caracter especial",
+        passwordLength: "La contraseña debe tener al menos 8 caracteres",
       },
     },
 

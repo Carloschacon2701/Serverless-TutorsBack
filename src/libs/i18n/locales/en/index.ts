@@ -18,6 +18,10 @@ export const EN = {
         passwordRequired: "Password is required",
         userNotFound: "User not found",
         idRequired: "ID is required",
+        passwordMayus: "Password must contain at least one uppercase letter",
+        passwordNumber: "Password must contain at least one number",
+        passwordSpecial: "Password must contain at least one special character",
+        passwordLength: "Password must have at least 8 characters",
       },
     },
     logOut: {

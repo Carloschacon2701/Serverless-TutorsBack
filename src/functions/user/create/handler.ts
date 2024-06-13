@@ -9,6 +9,12 @@ import i18n from "../../../libs/i18n";
 import { Cognito } from "../../../libs/AWS/Cognito";
 import { UserCreation } from "../../../utils/Interfaces/User";
 import { initializePrisma } from "../../../utils/prisma";
+import {
+  mayusRules,
+  numberRules,
+  specialRules,
+  lengthRules,
+} from "../../../utils/regExp";
 
 const i18nString = (key: string) => i18n.t("User.newUser.validations." + key);
 
@@ -100,7 +106,12 @@ export const create = middy(handler).use([
       email: string()
         .email()
         .required(() => i18nString("emailRequired")),
-      password: string().required(() => i18nString("passwordRequired")),
+      password: string()
+        .required(() => i18nString("passwordRequired"))
+        .matches(mayusRules, () => i18nString("passwordMayus"))
+        .matches(numberRules, () => i18nString("passwordNumber"))
+        .matches(specialRules, () => i18nString("passwordSpecial"))
+        .matches(lengthRules, () => i18nString("passwordLength")),
       role: number()
         .required(() => i18nString("roleRequired"))
         .oneOf([1, 2], () => i18nString("roleInvalid")),
