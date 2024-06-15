@@ -1,5 +1,5 @@
 uploadProfilePhoto:
-  handler: src/functions/user/profilePhoto/handler.uploadProfilePhoto
+  handler: src/functions/user/profilePhoto/upload/handler.uploadProfilePhoto
   events:
     - http:
         path: user/photo

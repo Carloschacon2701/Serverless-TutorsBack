@@ -108,6 +108,13 @@ export const EN = {
         invalidFormat: "Invalid format. Only .pdf is allowed",
       },
     },
+
+    find: {
+      validations: {
+        idRequired: "ID is required",
+        notFound: "Document not found",
+      },
+    },
   },
 
   internalServerError: "Internal Server Error",

@@ -110,6 +110,13 @@ export const ES = {
         invalidFormat: "Formato inválido, solo se permiten .pdf",
       },
     },
+
+    find: {
+      validations: {
+        idRequired: "El ID es requerido",
+        notFound: "Documento no encontrado",
+      },
+    },
   },
 
   Category: {
