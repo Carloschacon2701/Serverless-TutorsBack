@@ -86,6 +86,9 @@ functions:
   findCareer: ${file(src/functions/Career/find/index.yml):findCareer}
   listCareer: ${file(src/functions/Career/list/index.yml):listCareer}
 
+  #Qualification
+  getQualifications: ${file(src/functions/qualifications/index.yml):getQualifications}
+
 plugins:
   - serverless-offline
   - serverless-prune-plugin

@@ -1,0 +1,7 @@
+getQualifications:
+  handler: src/functions/qualifications/handler.getQualification
+  events:
+    - http:
+        path: qualification
+        method: post
+        cors: true
