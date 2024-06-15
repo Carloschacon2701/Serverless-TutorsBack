@@ -109,6 +109,14 @@ export const EN = {
       },
     },
 
+    delete: {
+      success: "Document deleted successfully",
+      validations: {
+        notFound: "Document not found",
+        notOwner: "You are not the owner of this document",
+      },
+    },
+
     find: {
       validations: {
         idRequired: "ID is required",

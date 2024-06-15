@@ -16,8 +16,9 @@ const handler = async (
 ): Promise<APIGatewayProxyResult> => {
   try {
     const prisma = initializePrisma();
-    const { pathParameters } = event;
-    const { subject_id = 0, limit = 10, page = 1 } = pathParameters || {};
+    const { pathParameters, queryStringParameters } = event;
+    const { subject_id = 0 } = pathParameters || {};
+    const { limit = 10, page = 1 } = queryStringParameters || {};
 
     const subject = await prisma.subject.findUnique({
       where: {

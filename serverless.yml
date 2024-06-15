@@ -68,6 +68,8 @@ functions:
   listDocuments: ${file(src/functions/docs/list/index.yml):listDocuments}
   listDocumentsByOwner: ${file(src/functions/docs/listByOwner/index.yml):listDocumentsByOwner}
   findDocument: ${file(src/functions/docs/find/index.yml):findDocument}
+  getDocFile: ${file(src/functions/docs/file/index.yml):getDocFile}
+  deleteDocument: ${file(src/functions/docs/delete/index.yml):deleteDocument}
 
   #Currency
   listCurrency: ${file(src/functions/Currency/list/index.yml):listCurrency}

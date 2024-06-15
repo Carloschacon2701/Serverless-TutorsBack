@@ -1,0 +1,7 @@
+deleteDocument:
+  handler: src/functions/docs/delete/handler.deleteDoc
+  events:
+    - http:
+        cors: true
+        method: delete
+        path: docs/{document_id}

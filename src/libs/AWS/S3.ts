@@ -1,4 +1,5 @@
 import {
+  DeleteObjectCommand,
   GetObjectCommand,
   PutObjectCommand,
   S3Client,
@@ -43,5 +44,12 @@ export const S3 = {
 
     const { Body, ContentType } = await client.send(command);
     return { Body, Key, ContentType };
+  },
+
+  async delete(Key: string) {
+    const command = new DeleteObjectCommand({ Bucket: BUCKET, Key });
+    const client = new S3Client({ region: REGION });
+
+    await client.send(command);
   },
 };

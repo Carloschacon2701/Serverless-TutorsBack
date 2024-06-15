@@ -111,6 +111,14 @@ export const ES = {
       },
     },
 
+    delete: {
+      success: "Documento eliminado exitosamente",
+      validations: {
+        notFound: "Documento no encontrado",
+        notOwner: "No eres el dueño de este documento",
+      },
+    },
+
     find: {
       validations: {
         idRequired: "El ID es requerido",

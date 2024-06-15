@@ -1,0 +1,7 @@
+getDocFile:
+  handler: src/functions/docs/file/handler.file
+  events:
+    - http:
+        cors: true
+        method: get
+        path: docs/file/{document_id}
