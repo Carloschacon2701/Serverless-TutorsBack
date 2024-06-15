@@ -37,6 +37,7 @@ const handler = async (
     }
 
     const uuid = randomUUID();
+    console.log("UUID", uuid);
     const key = "documents/" + name + "-" + uuid + ".pdf";
 
     const presignedURL = await S3.getPresignedUrl(key);

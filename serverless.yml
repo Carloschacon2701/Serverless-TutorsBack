@@ -52,7 +52,7 @@ functions:
   loginUser: ${file(src/functions/user/logIn/index.yml):userLogin}
   updateUser: ${file(src/functions/user/update/index.yml):updateUser}
   userLogOut: ${file(src/functions/user/LogOut/index.yml):userLogOut}
-  uploadProfilePhoto: ${file(src/functions/user/uploadProfilePhoto/upload/index.yml):uploadProfilePhoto}
+  uploadProfilePhoto: ${file(src/functions/user/profilePhoto/upload/index.yml):uploadProfilePhoto}
 
   # MENTORSHIP
   createMentorship: ${file(src/functions/Mentorship/create/index.yml):createMentorship}
@@ -67,6 +67,7 @@ functions:
   createDocument: ${file(src/functions/docs/Upload/index.yml):createDocument}
   listDocuments: ${file(src/functions/docs/list/index.yml):listDocuments}
   listDocumentsByOwner: ${file(src/functions/docs/listByOwner/index.yml):listDocumentsByOwner}
+  findDocument: ${file(src/functions/docs/find/index.yml):findDocument}
 
   #Currency
   listCurrency: ${file(src/functions/Currency/list/index.yml):listCurrency}

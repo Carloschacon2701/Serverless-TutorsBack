@@ -1,0 +1,7 @@
+findDocument:
+  handler: src/functions/docs/find/handler.find
+  events:
+    - http:
+        path: docs/{document_id}
+        method: get
+        cors: true

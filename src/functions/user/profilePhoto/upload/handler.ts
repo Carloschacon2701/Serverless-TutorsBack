@@ -1,16 +1,16 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import { Responses } from "../../../libs/Responses";
-import i18n from "../../../libs/i18n";
 import middy from "@middy/core";
 import jsonBodyParser from "@middy/http-json-body-parser";
-import { object, string } from "yup";
-import { schemaValidator } from "../../../libs/lambda";
-import { cognitoMiddleware } from "../../../middlewares/JWT";
-import { i18nMiddleware } from "../../../middlewares/i18n";
-import { UploadUserPhoto } from "../../../utils/Interfaces/User";
-import { S3 } from "../../../libs/AWS/S3";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { randomUUID } from "crypto";
-import { initializePrisma } from "../../../utils/prisma";
+import { object, string } from "yup";
+import i18n from "../../../../libs/i18n";
+import { schemaValidator } from "../../../../libs/lambda";
+import { Responses } from "../../../../libs/Responses";
+import { i18nMiddleware } from "../../../../middlewares/i18n";
+import { cognitoMiddleware } from "../../../../middlewares/JWT";
+import { UploadUserPhoto } from "../../../../utils/Interfaces/User";
+import { initializePrisma } from "../../../../utils/prisma";
+import { S3 } from "../../../../libs/AWS/S3";
 
 const i18nString = (key: string) =>
   i18n.t("User.uploadPhoto.validations" + key);
