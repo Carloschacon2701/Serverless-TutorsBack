@@ -30,15 +30,14 @@ const handler = async (
       return Responses._404({ errors: [i18n.t("subjectNotFound")] });
     }
 
-    const format = name.split(".")[1];
+    const [fileName, format] = name.split(".");
 
     if (format !== "pdf") {
       return Responses._400({ errors: [i18nString("invalidFormat")] });
     }
 
     const uuid = randomUUID();
-    console.log("UUID", uuid);
-    const key = "documents/" + name + "-" + uuid + ".pdf";
+    const key = "documents/" + fileName + "-" + uuid + ".pdf";
 
     const presignedURL = await S3.getPresignedUrl(key);
 
