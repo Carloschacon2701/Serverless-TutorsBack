@@ -28,7 +28,7 @@ const handler = async (
     });
 
     if (!user) {
-      throw new Error(i18nString("userNotFound"));
+      return Responses._404({ errors: [i18nString("userNotFound")] });
     }
 
     return Responses._200({ data: user });
