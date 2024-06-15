@@ -17,12 +17,12 @@ const handler = async (
   try {
     const prisma = initializePrisma();
     const { pathParameters, queryStringParameters } = event;
-    const { subject_id = 0 } = pathParameters || {};
+    const { sub_id = 0 } = pathParameters || {};
     const { limit = 10, page = 1 } = queryStringParameters || {};
 
     const subject = await prisma.subject.findUnique({
       where: {
-        id: Number(subject_id),
+        id: Number(sub_id),
       },
     });
 
@@ -33,7 +33,7 @@ const handler = async (
 
     const list = await prisma.document.findMany({
       where: {
-        subject_id: Number(subject_id),
+        subject_id: Number(sub_id),
       },
       select: {
         category_id: true,
@@ -47,7 +47,7 @@ const handler = async (
 
     const count = await prisma.document.count({
       where: {
-        subject_id: Number(subject_id),
+        subject_id: Number(sub_id),
       },
     });
 

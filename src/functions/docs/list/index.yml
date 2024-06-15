@@ -2,6 +2,6 @@ listDocuments:
   handler: src/functions/docs/list/handler.list
   events:
     - http:
-        path: docs/subject/{subject_id}
+        path: docs/subject/{sub_id}
         method: get
         cors: true
