@@ -7,6 +7,8 @@ export const ES = {
       error: "Error creando usuario",
 
       validations: {
+        photoFormatInvalid:
+          "Formato de foto inválido. Solo se permiten .jpg, .jpeg, y .png",
         careerRequired: "La Carrera es requerida",
         careerInvalid: "La Carrera es inválida",
         nameRequired: "El Nombre es requerido",
@@ -23,6 +25,14 @@ export const ES = {
         passwordSpecial:
           "La contraseña debe contener al menos un caracter especial",
         passwordLength: "La contraseña debe tener al menos 8 caracteres",
+      },
+    },
+
+    uploadPhoto: {
+      validations: {
+        photoFormatInvalid:
+          "Formato de foto inválido. Solo se permiten .jpg, .jpeg, y .png",
+        photoRequired: "La foto es requerida",
       },
     },
 
@@ -97,6 +107,7 @@ export const ES = {
         subjectRequired: "La materia es requerida",
         fileTypeInvalid: "Tipo de archivo inválido",
         subjectNotFound: "Materia no encontrada",
+        invalidFormat: "Formato inválido, solo se permiten .pdf",
       },
     },
   },

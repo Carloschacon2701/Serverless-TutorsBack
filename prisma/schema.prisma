@@ -19,6 +19,7 @@ model User {
   id                   Int           @id @default(autoincrement())
   name                 String
   email                String        @unique
+  photo                String?
   role_id              Int
   role                 Role          @relation(fields: [role_id], references: [id])
   description          String?
@@ -27,6 +28,7 @@ model User {
   appointments_tutor   Appointment[] @relation("tutor_relation")
   career_id            Int
   career               Career        @relation(fields: [career_id], references: [id])
+  Document             Document[]
 }
 
 model Day {
@@ -69,6 +71,8 @@ model Document {
   category    Category @relation(fields: [category_id], references: [id])
   subject_id  Int
   subject     Subject  @relation(fields: [subject_id], references: [id])
+  created_by  Int
+  User        User     @relation(fields: [created_by], references: [id])
 }
 
 model Role {

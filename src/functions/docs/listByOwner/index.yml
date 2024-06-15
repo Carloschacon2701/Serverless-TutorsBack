@@ -1,0 +1,7 @@
+listDocumentsByOwner:
+  handler: src/functions/docs/listByOwner/handler.list
+  events:
+    - http:
+        path: docs
+        method: get
+        cors: true

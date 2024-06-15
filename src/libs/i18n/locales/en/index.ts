@@ -7,6 +7,8 @@ export const EN = {
       error: "Error creating user",
 
       validations: {
+        photoFormatInvalid:
+          "Invalid photo format. Only .jpg, .jpeg, and .png are allowed",
         careerRequired: "Career is required",
         careerInvalid: "Career is invalid",
         nameRequired: "Name is required",
@@ -24,6 +26,15 @@ export const EN = {
         passwordLength: "Password must have at least 8 characters",
       },
     },
+
+    uploadPhoto: {
+      validations: {
+        photoFormatInvalid:
+          "Invalid photo format. Only .jpg, .jpeg, and .png are allowed",
+        photoRequired: "Photo is required",
+      },
+    },
+
     logOut: {
       success: "User logged out successfully",
       validations: {
@@ -94,6 +105,7 @@ export const EN = {
         subjectRequired: "Subject is required",
         FileTypeInvalid: "Invalid file type",
         subjectNotFound: "Subject not found",
+        invalidFormat: "Invalid format. Only .pdf is allowed",
       },
     },
   },

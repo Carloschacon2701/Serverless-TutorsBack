@@ -13,16 +13,11 @@ export const S3 = {
       Key: key,
     });
 
-    try {
-      const response = await getSignedUrl(client, command, {
-        expiresIn: 3600,
-      });
+    const response = await getSignedUrl(client, command, {
+      expiresIn: 3600,
+    });
 
-      return response;
-    } catch (error) {
-      console.log("Error getting presigned URL from S3", error);
-      return error;
-    }
+    return response;
   },
 
   async get(Bucket: string, Key: string) {

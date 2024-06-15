@@ -1,0 +1,7 @@
+uploadProfilePhoto:
+  handler: src/functions/user/profilePhoto/handler.uploadProfilePhoto
+  events:
+    - http:
+        path: user/photo
+        method: put
+        cors: true

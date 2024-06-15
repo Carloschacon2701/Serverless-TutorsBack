@@ -15,8 +15,11 @@ import {
   specialRules,
   lengthRules,
 } from "../../../utils/regExp";
+import { S3 } from "../../../libs/AWS/S3";
+import { randomUUID } from "crypto";
 
 const i18nString = (key: string) => i18n.t("User.newUser.validations." + key);
+const validPhotoFormats = ["jpg", "jpeg", "png"];
 
 const handler = async (
   event: APIGatewayProxyEvent
@@ -24,7 +27,10 @@ const handler = async (
   try {
     const prisma = initializePrisma();
     const body = event.body as unknown as UserCreation;
-    const { name, email, role, description, password, career } = body;
+    const { name, email, role, description, password, career, profilePhoto } =
+      body;
+
+    let presignedURL = "";
 
     const existingUser = await prisma.user.findUnique({
       where: {
@@ -62,6 +68,24 @@ const handler = async (
       });
     }
 
+    if (profilePhoto) {
+      const [filename, format] = profilePhoto.split(".");
+
+      const hasValidFormat = validPhotoFormats.includes(format);
+
+      if (!hasValidFormat) {
+        return Responses._400({
+          errors: [i18nString("photoFormatInvalid")],
+        });
+      }
+
+      const uuid = randomUUID();
+
+      const path = "profile/" + filename + "-" + uuid + "." + format;
+
+      presignedURL = await S3.getPresignedUrl(path);
+    }
+
     const newUser = await prisma.user.create({
       data: {
         name,
@@ -85,8 +109,9 @@ const handler = async (
     });
 
     return Responses._200({
-      errors: [i18n.t("User.newUser.success")],
-      user: newUser,
+      message: [i18n.t("User.newUser.success")],
+      data: newUser,
+      presignedURL,
     });
   } catch (error) {
     console.log(error);
@@ -117,6 +142,7 @@ export const create = middy(handler).use([
         .oneOf([1, 2], () => i18nString("roleInvalid")),
       description: string().default(""),
       career: number().required(() => i18nString("careerRequired")),
+      profilePhoto: string().optional(),
     }),
   }),
 ]);

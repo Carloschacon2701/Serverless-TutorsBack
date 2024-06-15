@@ -10,6 +10,7 @@ import { DocumentCreation } from "../../../utils/Interfaces/Documents";
 import { number, object, string } from "yup";
 import { S3 } from "../../../libs/AWS/S3";
 import { cognitoMiddleware } from "../../../middlewares/JWT";
+import { randomUUID } from "crypto";
 
 const i18nString = (key: string) => i18n.t("Docs.upload.validations." + key);
 
@@ -19,7 +20,7 @@ const handler = async (
   try {
     const prisma = initializePrisma();
     const { body } = event;
-    const { name, subject } = body as unknown as DocumentCreation;
+    const { name, subject, userCognito } = body as unknown as DocumentCreation;
 
     const existingSubject = await prisma.subject.findUnique({
       where: { id: subject },
@@ -29,7 +30,14 @@ const handler = async (
       return Responses._404({ errors: [i18n.t("subjectNotFound")] });
     }
 
-    const key = "documents/" + name;
+    const format = name.split(".")[1];
+
+    if (format !== "pdf") {
+      return Responses._400({ errors: [i18nString("invalidFormat")] });
+    }
+
+    const uuid = randomUUID();
+    const key = "documents/" + name + "-" + uuid + ".pdf";
 
     const presignedURL = await S3.getPresignedUrl(key);
 
@@ -39,6 +47,7 @@ const handler = async (
         path: key,
         category_id: existingSubject?.category_id,
         subject_id: subject,
+        created_by: userCognito?.id,
       },
       select: {
         category_id: true,

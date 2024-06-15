@@ -5,6 +5,7 @@ export interface UserCreation {
   description: string;
   password: string;
   career: number;
+  profilePhoto?: string;
 }
 
 export interface UserLogIn {
@@ -15,5 +16,10 @@ export interface UserLogIn {
 export interface UpdateUser {
   description: string;
   role: number;
+  userCognito: any;
+}
+
+export interface UploadUserPhoto {
+  key: string;
   userCognito: any;
 }
