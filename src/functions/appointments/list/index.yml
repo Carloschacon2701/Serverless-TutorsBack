@@ -1,0 +1,7 @@
+listAppoinments:
+  handler: src/functions/appointments/list/handler.list
+  events:
+    - http:
+        cors: true
+        method: get
+        path: appointments

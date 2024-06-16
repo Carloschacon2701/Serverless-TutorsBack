@@ -5,6 +5,7 @@ export interface MentorshipCreation {
   tutor_id: number;
   currency_id: number;
   userCognito: any;
+  capacity: number;
 }
 
 export interface DeleteMentorship {

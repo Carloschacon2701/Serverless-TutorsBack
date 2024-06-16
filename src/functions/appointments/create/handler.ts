@@ -9,7 +9,7 @@ import { ConsultacyCreation } from "../../../utils/Interfaces/Appointments";
 import i18n from "../../../libs/i18n";
 import { initializePrisma } from "../../../utils/prisma";
 
-const i18nString = (key: string) => i18n.t("Consultancy.validation." + key);
+const i18nString = (key: string) => i18n.t("Appointment.create." + key);
 
 const handler = async (
   event: APIGatewayProxyEvent
@@ -25,11 +25,32 @@ const handler = async (
       where: {
         id: mentorship,
       },
+      include: {
+        _count: {
+          select: {
+            appointments: {
+              where: {
+                status: {
+                  some: {
+                    status_id: 1,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     });
 
     if (!existingMentorship) {
       return Responses._400({
-        errors: [i18nString("mentorshipNotFound")],
+        errors: [i18nString("validations.mentorshipNotFound")],
+      });
+    }
+
+    if (existingMentorship.capacity >= existingMentorship._count.appointments) {
+      return Responses._400({
+        errors: [i18nString("validations.mentorshipFull")],
       });
     }
 
@@ -39,11 +60,18 @@ const handler = async (
         tutor_id: existingMentorship.tutor_id,
         mentorship_id: mentorship,
         student_id: student,
+        status: {
+          create: {
+            status_id: 1,
+          },
+        },
       },
+
       include: {
         mentorship: true,
         student: true,
         tutor: true,
+        status: true,
       },
     });
 

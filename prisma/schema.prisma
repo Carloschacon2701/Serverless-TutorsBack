@@ -39,6 +39,7 @@ model Day {
 
 model Mentorship {
   id           Int           @id @default(autoincrement())
+  capacity     Int
   work_days    Day[]
   subject_id   Int
   subject      Subject       @relation(fields: [subject_id], references: [id])
@@ -53,14 +54,34 @@ model Mentorship {
 }
 
 model Appointment {
-  id            Int        @id @default(autoincrement())
+  id            Int                  @id @default(autoincrement())
+  created_at    DateTime             @default(now())
   date          DateTime
   student_id    Int
-  student       User       @relation("student_relation", fields: [student_id], references: [id])
+  student       User                 @relation("student_relation", fields: [student_id], references: [id])
   tutor_id      Int
-  tutor         User       @relation("tutor_relation", fields: [tutor_id], references: [id])
+  tutor         User                 @relation("tutor_relation", fields: [tutor_id], references: [id])
   mentorship_id Int
-  mentorship    Mentorship @relation(fields: [mentorship_id], references: [id])
+  mentorship    Mentorship           @relation(fields: [mentorship_id], references: [id])
+  status        Appointment_status[]
+}
+
+model Appointment_status {
+  id            Int         @id @default(autoincrement())
+  status_id     Int
+  status        Status      @relation(fields: [status_id], references: [id])
+  appointmentId Int
+  Appointment   Appointment @relation(fields: [appointmentId], references: [id])
+  created_at    DateTime    @default(now())
+
+  @@index([appointmentId], name: "appointmentId")
+  @@index([status_id], name: "status_id")
+}
+
+model Status {
+  id          Int                  @id @default(autoincrement())
+  name        String
+  appointment Appointment_status[]
 }
 
 model Document {

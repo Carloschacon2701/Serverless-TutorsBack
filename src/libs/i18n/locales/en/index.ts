@@ -62,6 +62,30 @@ export const EN = {
     },
   },
 
+  Appointment: {
+    create: {
+      validations: {
+        mentorshipNotFound: "Mentorship not found",
+        mentorshipFull: "Mentorship is full",
+      },
+    },
+
+    delete: {
+      success: "Appointment cancelled successfully",
+      validations: {
+        appointmentNotFound: "Appointment not found",
+        notOwner: "You are not the owner of this appointment",
+        appointmentCancelled: "Appointment already cancelled",
+      },
+    },
+
+    find: {
+      validations: {
+        notFound: "Appointment not found",
+      },
+    },
+  },
+
   Mentorship: {
     create: {
       success: "Mentorship created successfully",
@@ -75,6 +99,7 @@ export const EN = {
         categoryIdRequired: "Category ID is required",
         tutorIdRequired: "Tutor ID is required",
         currencyIdRequired: "Currency ID is required",
+        capacityRequired: "Capacity is required",
       },
     },
     delete: {

@@ -147,6 +147,17 @@ const categories = [
   },
 ];
 
+const status = [
+  {
+    id: 1,
+    name: "Placed",
+  },
+  {
+    id: 2,
+    name: "Cancelled",
+  },
+];
+
 const subjects = [
   { id: 1, name: "Physics I", category_id: 1 },
   { id: 2, name: "Physics II", category_id: 1 },
@@ -368,6 +379,16 @@ async function main() {
     });
 
     console.log(`Career ${career.name} created`);
+  }
+
+  for (const stat of status) {
+    await prisma.status.upsert({
+      where: { id: stat.id },
+      update: stat,
+      create: stat,
+    });
+
+    console.log(`Status ${stat.name} created`);
   }
 
   console.log("Seeding finished.");

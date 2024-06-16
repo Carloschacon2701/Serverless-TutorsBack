@@ -1,0 +1,7 @@
+deleteAppointment:
+  handler: src/functions/appointments/delete/handler.deleteAppointment
+  events:
+    - http:
+        cors: true
+        method: delete
+        path: appointments/{appointment_id}

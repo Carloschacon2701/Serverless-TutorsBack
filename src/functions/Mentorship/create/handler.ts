@@ -68,6 +68,7 @@ const handler = async (
             id: day,
           })),
         },
+        capacity: body.capacity,
         subject_id,
         category_id: existingSubject.category_id,
         tutor_id: userCognito.id,
@@ -115,6 +116,9 @@ export const create = middy(handler).use([
       hourly_price: number()
         .positive()
         .required(() => i18nString("hourlyPriceRequired")),
+      capacity: number()
+        .positive()
+        .required(() => i18nString("capacityRequired")),
     }),
   }),
 ]);

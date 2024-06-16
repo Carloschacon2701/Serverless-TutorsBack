@@ -16,7 +16,7 @@ const handler = async (
     totalTests: number;
     tests: Test[];
   };
-  const neccesaryQualifications = [4.5, 5, 6, 7, 8, 9];
+  const neccesaryQualifications = [5, 6, 7, 8, 9];
   let acc = 0;
   const results = {} as Record<number, number | string>;
   let remainingPercentage = 100;
@@ -27,27 +27,30 @@ const handler = async (
     });
 
   for (const { percentage, qualification } of tests) {
-    const convertedQualification = (qualification / 100) * 9;
+    const convertedQualification =
+      parseFloat(((qualification / 100) * 9)?.toFixed(1)) + 0.4;
+
     acc += convertedQualification * (percentage / 100);
     remainingPercentage -= percentage;
   }
 
   for (const qualification of neccesaryQualifications) {
-    const result = (qualification - acc) / (9 * (remainingPercentage / 100));
+    const necessaryPoints = Number((qualification - acc).toFixed(1)) - 0.5;
+    const maximumPoints = 9 * (remainingPercentage / 100);
 
-    if (result < 0) {
+    if (necessaryPoints < 1) {
       results[qualification] = 0;
       continue;
     }
 
-    const desiredQualification = Number((result * 100)?.toFixed(0));
+    const desiredQualification = (necessaryPoints * 100) / maximumPoints - 3;
 
     if (desiredQualification > 100) {
       results[qualification] = "impossible";
       continue;
     }
 
-    results[qualification] = desiredQualification?.toFixed(2);
+    results[qualification] = Math.floor(desiredQualification);
   }
 
   return Responses._200({ data: results });

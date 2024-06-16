@@ -62,6 +62,9 @@ functions:
 
   # APPOINTMENTS
   createAppointment: ${file(src/functions/appointments/create/index.yml):createAppointment}
+  findAppointment: ${file(src/functions/appointments/find/index.yml):findAppointment}
+  listAppointments: ${file(src/functions/appointments/list/index.yml):listAppointments}
+  deleteAppointment: ${file(src/functions/appointments/delete/index.yml):deleteAppointment}
 
   # DOCUMENT
   createDocument: ${file(src/functions/docs/Upload/index.yml):createDocument}

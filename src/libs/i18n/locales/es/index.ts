@@ -54,6 +54,30 @@ export const ES = {
     },
   },
 
+  Appointment: {
+    create: {
+      validations: {
+        mentorshipNotFound: "Mentoria no encontrada",
+        mentorshipFull: "Mentoria llena",
+      },
+    },
+
+    delete: {
+      success: "Cita cancelada exitosamente",
+      validations: {
+        appointmentNotFound: "Cita no encontrada",
+        notOwner: "No eres el dueño de esta cita",
+        appointmentCancelled: "Cita ya cancelada",
+      },
+    },
+
+    find: {
+      validations: {
+        notFound: "Cita no encontrada",
+      },
+    },
+  },
+
   Subject: {
     find: {
       validations: {
@@ -76,14 +100,15 @@ export const ES = {
         categoryIdRequired: "El ID de la categoría es requerido",
         tutorIdRequired: "El ID del tutor es requerido",
         currencyIdRequired: "El ID de la moneda es requerido",
+        capacityRequired: "La capacidad es requerida",
       },
+    },
 
-      delete: {
-        success: "Mentoria eliminada exitosamente",
-        validations: {
-          mentorshipNotFound: "Mentoria no encontrada",
-          mentorshipIdRequired: "El ID de la mentoria es requerido",
-        },
+    delete: {
+      success: "Mentoria eliminada exitosamente",
+      validations: {
+        mentorshipNotFound: "Mentoria no encontrada",
+        mentorshipIdRequired: "El ID de la mentoria es requerido",
       },
     },
 
