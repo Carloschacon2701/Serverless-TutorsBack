@@ -5,8 +5,6 @@ import i18n from "../../../libs/i18n";
 import middy from "@middy/core";
 import jsonBodyParser from "@middy/http-json-body-parser";
 import { i18nMiddleware } from "../../../middlewares/i18n";
-import { schemaValidator } from "../../../libs/lambda";
-import { number, object } from "yup";
 
 const i18nString = (key: string) => i18n.t("Subject.find." + key);
 
@@ -36,12 +34,4 @@ const handler = async (
   }
 };
 
-export const find = middy(handler).use([
-  jsonBodyParser(),
-  i18nMiddleware(),
-  schemaValidator({
-    pathParameters: object({
-      id: number().required(i18nString("validations.idRequired")),
-    }),
-  }),
-]);
+export const find = middy(handler).use([jsonBodyParser(), i18nMiddleware()]);

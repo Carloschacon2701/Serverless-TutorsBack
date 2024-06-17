@@ -67,6 +67,19 @@ export const EN = {
       validations: {
         mentorshipNotFound: "Mentorship not found",
         mentorshipFull: "Mentorship is full",
+        invalidDate: "Invalid date, work days are: {{workDays}}",
+        dateMustBeFuture: "Date must be in the future",
+        dateRequired: "Date is required",
+        mentorshipRequired: "Mentorship is required",
+      },
+      days: {
+        monday: "Monday",
+        tuesday: "Tuesday",
+        wednesday: "Wednesday",
+        thursday: "Thursday",
+        friday: "Friday",
+        saturday: "Saturday",
+        sunday: "Sunday",
       },
     },
 

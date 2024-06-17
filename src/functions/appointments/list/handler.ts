@@ -8,7 +8,7 @@ import { i18nMiddleware } from "../../../middlewares/i18n";
 import { cognitoMiddleware } from "../../../middlewares/JWT";
 import { calculatePages } from "../../../utils/functions";
 
-export const handler = async (
+const handler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   try {

@@ -2,8 +2,6 @@ import middy from "@middy/core";
 import jsonBodyParser from "@middy/http-json-body-parser";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { i18nMiddleware } from "../../../middlewares/i18n";
-import { schemaValidator } from "../../../libs/lambda";
-import { number, object } from "yup";
 import i18n from "../../../libs/i18n";
 import { Responses } from "../../../libs/Responses";
 import { initializePrisma } from "../../../utils/prisma";
@@ -38,12 +36,4 @@ const handler = async (
   }
 };
 
-export const find = middy(handler).use([
-  jsonBodyParser(),
-  i18nMiddleware(),
-  schemaValidator({
-    pathParameters: object({
-      id: number().required(i18nString("idRequired")),
-    }),
-  }),
-]);
+export const find = middy(handler).use([jsonBodyParser(), i18nMiddleware()]);

@@ -1,4 +1,4 @@
-listAppoinments:
+listAppointments:
   handler: src/functions/appointments/list/handler.list
   events:
     - http:

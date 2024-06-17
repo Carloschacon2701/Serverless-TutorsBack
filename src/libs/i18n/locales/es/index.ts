@@ -59,6 +59,19 @@ export const ES = {
       validations: {
         mentorshipNotFound: "Mentoria no encontrada",
         mentorshipFull: "Mentoria llena",
+        invalidDate: "Fecha inválida, los días de trabajo son: {{workDays}}",
+        dateMustBeFuture: "La fecha debe ser en el futuro",
+        dateRequired: "La fecha es requerida",
+        mentorshipRequired: "La mentoria es requerida",
+      },
+      days: {
+        monday: "Lunes",
+        tuesday: "Martes",
+        wednesday: "Miércoles",
+        thursday: "Jueves",
+        friday: "Viernes",
+        saturday: "Sábado",
+        sunday: "Domingo",
       },
     },
 

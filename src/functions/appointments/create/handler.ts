@@ -8,8 +8,10 @@ import { date, number, object } from "yup";
 import { ConsultacyCreation } from "../../../utils/Interfaces/Appointments";
 import i18n from "../../../libs/i18n";
 import { initializePrisma } from "../../../utils/prisma";
+import { cognitoMiddleware } from "../../../middlewares/JWT";
 
-const i18nString = (key: string) => i18n.t("Appointment.create." + key);
+const i18nString = (key: string, options?: object) =>
+  i18n.t("Appointment.create." + key, { ...options });
 
 const handler = async (
   event: APIGatewayProxyEvent
@@ -17,19 +19,19 @@ const handler = async (
   try {
     const body = event.body as unknown as ConsultacyCreation;
     const prisma = initializePrisma();
-    const { mentorship = 0, date = "" } = body;
-
-    const student = 0;
+    const { mentorship = 0, date = "", userCognito } = body;
 
     const existingMentorship = await prisma.mentorship.findUnique({
       where: {
         id: mentorship,
       },
       include: {
+        work_days: true,
         _count: {
           select: {
             appointments: {
               where: {
+                date: new Date(date),
                 status: {
                   some: {
                     status_id: 1,
@@ -48,9 +50,26 @@ const handler = async (
       });
     }
 
-    if (existingMentorship.capacity >= existingMentorship._count.appointments) {
+    if (existingMentorship._count.appointments >= existingMentorship.capacity) {
       return Responses._400({
         errors: [i18nString("validations.mentorshipFull")],
+      });
+    }
+
+    const parsedDay = new Date(date).getDay();
+    const isValidDate = existingMentorship.work_days.some(
+      (d) => d.id === parsedDay
+    );
+
+    if (!isValidDate) {
+      let workDays = "";
+
+      existingMentorship.work_days.forEach((day) => {
+        workDays += i18nString(`days.${day.name.toLowerCase()}`) + ", ";
+      });
+
+      return Responses._400({
+        errors: [i18nString("validations.invalidDate", { workDays })],
       });
     }
 
@@ -59,7 +78,7 @@ const handler = async (
         date: new Date(date),
         tutor_id: existingMentorship.tutor_id,
         mentorship_id: mentorship,
-        student_id: student,
+        student_id: userCognito.id,
         status: {
           create: {
             status_id: 1,
@@ -85,10 +104,15 @@ const handler = async (
 export const create = middy(handler).use([
   jsonBodyParser(),
   i18nMiddleware(),
+  cognitoMiddleware(),
   schemaValidator({
     body: object({
-      mentorship: number().required(),
-      date: date().required(),
+      mentorship: number().required(() =>
+        i18nString("validations.mentorshipRequired")
+      ),
+      date: date()
+        .min(new Date(), () => i18nString("validations.dateMustBeFuture"))
+        .required(() => i18nString("validations.dateRequired")),
     }),
   }),
 ]);
