@@ -1,5 +1,6 @@
 import {
   AdminConfirmSignUpCommand,
+  AdminGetUserCommand,
   AdminUpdateUserAttributesCommand,
   ChangePasswordCommand,
   CognitoIdentityProviderClient,
@@ -96,13 +97,33 @@ export const Cognito = {
   async verifyToken(token: string) {
     const verifier = CognitoJwtVerifier.create({
       userPoolId: USER_POOL_ID,
-      tokenUse: "id",
+      tokenUse: "access",
       clientId: CLIENT_ID,
     });
 
     try {
       const payload = await verifier.verify(token);
-      return payload;
+
+      const command = new AdminGetUserCommand({
+        UserPoolId: USER_POOL_ID,
+        Username: payload.username,
+      });
+
+      const user = await client.send(command);
+
+      const attributes = user?.UserAttributes?.filter(
+        (attribute) =>
+          attribute.Name === "custom:id" || attribute.Name === "custom:role"
+      );
+
+      return {
+        id: Number(
+          attributes?.find((attr) => attr.Name === "custom:id")?.Value
+        ),
+        role: Number(
+          attributes?.find((attr) => attr.Name === "custom:role")?.Value
+        ),
+      };
     } catch (error) {
       console.log("Error", error);
       return null;

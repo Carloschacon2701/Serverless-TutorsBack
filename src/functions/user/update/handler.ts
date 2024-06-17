@@ -15,8 +15,9 @@ const handler = async (
 ): Promise<APIGatewayProxyResult> => {
   try {
     const prisma = initializePrisma();
-    const { body } = event;
-    const { description, role, userCognito } = body as unknown as UpdateUser;
+    const { body, headers } = event;
+    const { description, role } = body as unknown as UpdateUser;
+    const { user_id } = headers;
     const updateObject: { role_id: number; description: string } = {} as {
       role_id: number;
       description: string;
@@ -32,7 +33,7 @@ const handler = async (
 
     const updatedUser = await prisma.user.update({
       where: {
-        id: userCognito.id,
+        id: Number(user_id),
       },
       data: updateObject,
     });

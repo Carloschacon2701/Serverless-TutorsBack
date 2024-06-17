@@ -22,8 +22,9 @@ export const handler = async (
 ): Promise<APIGatewayProxyResult> => {
   try {
     const prisma = initializePrisma();
-    const { body } = event;
-    const { key, userCognito } = body as unknown as UploadUserPhoto;
+    const { body, headers } = event;
+    const { key } = body as unknown as UploadUserPhoto;
+    const { user_id } = headers;
     const validFormats = ["jpg", "jpeg", "png"];
 
     const [filename, format] = key.split(".");
@@ -44,7 +45,7 @@ export const handler = async (
 
     await prisma.user.update({
       where: {
-        id: userCognito.id,
+        id: Number(user_id),
       },
       data: {
         photo: awsPath,

@@ -17,9 +17,9 @@ const handler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   try {
-    const body = event.body as unknown as ConsultacyCreation;
+    const { body, headers } = event;
     const prisma = initializePrisma();
-    const { mentorship = 0, date = "", userCognito } = body;
+    const { mentorship = 0, date = "" } = body as unknown as ConsultacyCreation;
 
     const existingMentorship = await prisma.mentorship.findUnique({
       where: {
@@ -78,7 +78,7 @@ const handler = async (
         date: new Date(date),
         tutor_id: existingMentorship.tutor_id,
         mentorship_id: mentorship,
-        student_id: userCognito.id,
+        student_id: Number(headers.user_id),
         status: {
           create: {
             status_id: 1,

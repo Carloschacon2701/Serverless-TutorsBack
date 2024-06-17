@@ -19,9 +19,10 @@ const handler = async (
 ): Promise<APIGatewayProxyResult> => {
   try {
     const prisma = initializePrisma();
-    const body = event.body as unknown as MentorshipCreation;
-    const { work_days, subject_id, currency_id, hourly_price, userCognito } =
-      body;
+    const { body, headers } = event;
+    const { user_id } = headers;
+    const { work_days, subject_id, currency_id, hourly_price, capacity } =
+      body as unknown as MentorshipCreation;
 
     const existingSubject = await prisma.subject.findUnique({
       where: {
@@ -35,7 +36,7 @@ const handler = async (
 
     const existingMentorship = await prisma.mentorship.findFirst({
       where: {
-        tutor_id: userCognito.id,
+        tutor_id: Number(user_id),
         subject_id: subject_id,
       },
     });
@@ -68,10 +69,10 @@ const handler = async (
             id: day,
           })),
         },
-        capacity: body.capacity,
+        capacity: capacity,
         subject_id,
         category_id: existingSubject.category_id,
-        tutor_id: userCognito.id,
+        tutor_id: Number(user_id),
         currency_id,
       },
 

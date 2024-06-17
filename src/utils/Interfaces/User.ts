@@ -17,12 +17,10 @@ export interface UserLogIn {
 export interface UpdateUser {
   description: string;
   role: number;
-  userCognito: any;
 }
 
 export interface UploadUserPhoto {
   key: string;
-  userCognito: any;
 }
 
 export interface ChangePassword {
