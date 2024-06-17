@@ -15,6 +15,8 @@ import { S3 } from "../../../../libs/AWS/S3";
 const i18nString = (key: string) =>
   i18n.t("User.uploadPhoto.validations" + key);
 
+const S3_BUCKET = process.env.S3_BUCKET_PROFILE_PHOTOS;
+
 export const handler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
@@ -34,16 +36,18 @@ export const handler = async (
 
     const uuid = randomUUID();
 
-    const path = "profile/" + filename + "-" + uuid + "." + format;
+    const path = filename + "-" + uuid + "." + format;
 
     const presignedURL = await S3.getPresignedUrl(path);
+
+    const awsPath = `https://${S3_BUCKET}.s3.amazonaws.com/` + path;
 
     await prisma.user.update({
       where: {
         id: userCognito.id,
       },
       data: {
-        photo: path,
+        photo: awsPath,
       },
     });
 

@@ -6,6 +6,7 @@ export interface UserCreation {
   password: string;
   career: number;
   profilePhoto?: string;
+  lastname: string;
 }
 
 export interface UserLogIn {

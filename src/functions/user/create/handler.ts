@@ -19,6 +19,8 @@ import { S3 } from "../../../libs/AWS/S3";
 import { randomUUID } from "crypto";
 
 const i18nString = (key: string) => i18n.t("User.newUser.validations." + key);
+
+const S3_BUCKET = process.env.S3_BUCKET_PROFILE_PHOTOS;
 const validPhotoFormats = ["jpg", "jpeg", "png"];
 
 const handler = async (
@@ -27,9 +29,18 @@ const handler = async (
   try {
     const prisma = initializePrisma();
     const body = event.body as unknown as UserCreation;
-    const { name, email, role, description, password, career, profilePhoto } =
-      body;
+    const {
+      name,
+      email,
+      role,
+      description,
+      password,
+      career,
+      profilePhoto,
+      lastname,
+    } = body;
 
+    let photo = null;
     let presignedURL = "";
 
     const existingUser = await prisma.user.findUnique({
@@ -81,9 +92,11 @@ const handler = async (
 
       const uuid = randomUUID();
 
-      const path = "profile/" + filename + "-" + uuid + "." + format;
+      const path = filename + "-" + uuid + "." + format;
 
       presignedURL = await S3.getPresignedUrl(path);
+
+      photo = `https://${S3_BUCKET}.s3.amazonaws.com/` + path;
     }
 
     const newUser = await prisma.user.create({
@@ -93,6 +106,8 @@ const handler = async (
         role_id: role,
         description,
         career_id: career,
+        lastname,
+        photo,
       },
       include: {
         career: true,
@@ -128,6 +143,7 @@ export const create = middy(handler).use([
   schemaValidator({
     body: object({
       name: string().required(() => i18nString("nameRequired")),
+      lastname: string().required(() => i18nString("lastnameRequired")),
       email: string()
         .email()
         .required(() => i18nString("emailRequired")),

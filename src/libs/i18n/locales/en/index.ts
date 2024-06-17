@@ -7,6 +7,7 @@ export const EN = {
       error: "Error creating user",
 
       validations: {
+        lastnameRequired: "Lastname is required",
         photoFormatInvalid:
           "Invalid photo format. Only .jpg, .jpeg, and .png are allowed",
         careerRequired: "Career is required",

@@ -36,6 +36,7 @@ const handler = async (
       IdToken,
       RefreshToken,
       AccessToken,
+      user_id: user.id,
     });
   } catch (error: any) {
     console.log("Error", error);
