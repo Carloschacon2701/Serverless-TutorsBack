@@ -24,3 +24,8 @@ export interface UploadUserPhoto {
   key: string;
   userCognito: any;
 }
+
+export interface ChangePassword {
+  currentPassword: string;
+  newPassword: string;
+}

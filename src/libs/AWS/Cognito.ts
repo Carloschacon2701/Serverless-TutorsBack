@@ -1,6 +1,7 @@
 import {
   AdminConfirmSignUpCommand,
   AdminUpdateUserAttributesCommand,
+  ChangePasswordCommand,
   CognitoIdentityProviderClient,
   GlobalSignOutCommand,
   InitiateAuthCommand,
@@ -28,6 +29,12 @@ interface Update {
 interface Login {
   email: string;
   password: string;
+}
+
+interface ChangePassword {
+  token: string;
+  previousPassword: string;
+  proposedPassword: string;
 }
 
 const CLIENT_ID = process.env.COGNITO_CLIENT_ID as string;
@@ -122,6 +129,22 @@ export const Cognito = {
           Value: role,
         },
       ],
+    });
+
+    const response = await client.send(command);
+
+    return response;
+  },
+
+  async changePassword({
+    token,
+    previousPassword,
+    proposedPassword,
+  }: ChangePassword) {
+    const command = new ChangePasswordCommand({
+      PreviousPassword: previousPassword,
+      ProposedPassword: proposedPassword,
+      AccessToken: token,
     });
 
     const response = await client.send(command);

@@ -1,0 +1,7 @@
+changePassword:
+  handler: src/functions/user/changePassword/handler.changePassword
+  events:
+    - http:
+        cors: true
+        path: user/changePassword
+        method: put

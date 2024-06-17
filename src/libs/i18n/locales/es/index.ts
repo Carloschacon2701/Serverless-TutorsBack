@@ -29,6 +29,14 @@ export const ES = {
       },
     },
 
+    changePassword: {
+      success: "Contraseña cambiada exitosamente",
+      validations: {
+        currentPasswordRequired: "Contraseña actual es requerida",
+        newPasswordRequired: "Nueva contraseña es requerida",
+      },
+    },
+
     uploadPhoto: {
       validations: {
         photoFormatInvalid:

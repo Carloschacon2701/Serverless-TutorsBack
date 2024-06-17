@@ -28,6 +28,14 @@ export const EN = {
       },
     },
 
+    changePassword: {
+      success: "Password changed successfully",
+      validations: {
+        currentPasswordRequired: "Current password is required",
+        newPasswordRequired: "New password is required",
+      },
+    },
+
     uploadPhoto: {
       validations: {
         photoFormatInvalid:

@@ -56,6 +56,7 @@ functions:
   updateUser: ${file(src/functions/user/update/index.yml):updateUser}
   userLogOut: ${file(src/functions/user/LogOut/index.yml):userLogOut}
   uploadProfilePhoto: ${file(src/functions/user/profilePhoto/upload/index.yml):uploadProfilePhoto}
+  changePassword: ${file(src/functions/user/changePassword/index.yml):changePassword}
 
   # MENTORSHIP
   createMentorship: ${file(src/functions/Mentorship/create/index.yml):createMentorship}
