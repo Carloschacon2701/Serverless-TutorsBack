@@ -24,6 +24,7 @@ const handler = async (
     const existingMentorship = await prisma.mentorship.findUnique({
       where: {
         id: mentorship,
+        active: true,
       },
       include: {
         work_days: true,

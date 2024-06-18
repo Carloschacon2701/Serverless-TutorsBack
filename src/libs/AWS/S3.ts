@@ -13,8 +13,9 @@ const REGION = process.env.REGION;
 export const S3 = {
   async getPresignedUrl(key: string, profilePhoto?: boolean) {
     const client = new S3Client({ region: REGION });
+    const bucketToUse = profilePhoto ? BUCKET_PHOTOS : BUCKET;
     const command = new PutObjectCommand({
-      Bucket: profilePhoto ? BUCKET_PHOTOS : BUCKET,
+      Bucket: bucketToUse,
       Key: key,
     });
 

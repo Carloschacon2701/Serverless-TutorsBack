@@ -51,6 +51,7 @@ const handler = async (
         created_by: Number(user_id),
       },
       select: {
+        id: true,
         category_id: true,
         subject_id: true,
         name: true,
