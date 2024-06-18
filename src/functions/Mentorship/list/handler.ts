@@ -40,7 +40,7 @@ const handler = async (
     const mentorship = await prisma.mentorship.findMany({
       skip: (Number(page) - 1) * Number(limit),
       take: Number(limit),
-      where: whereClause,
+      where: { ...whereClause, active: true },
       include: {
         subject: true,
         currency: true,

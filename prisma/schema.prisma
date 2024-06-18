@@ -42,6 +42,7 @@ model Mentorship {
   id           Int           @id @default(autoincrement())
   capacity     Int
   work_days    Day[]
+  active       Boolean       @default(true)
   subject_id   Int
   subject      Subject       @relation(fields: [subject_id], references: [id])
   category_id  Int

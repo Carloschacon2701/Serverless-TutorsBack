@@ -8,7 +8,7 @@ import { schemaValidator } from "../../../libs/lambda";
 import { object, string } from "yup";
 import i18n from "../../../libs/i18n";
 import { cognitoMiddleware } from "../../../middlewares/JWT";
-import { Roles } from "../../../utils/enums";
+import { AppointmentStatus, Roles } from "../../../utils/enums";
 
 const i18nString = (key: string) => i18n.t("Mentorship.delete." + key);
 
@@ -25,6 +25,17 @@ const handler = async (
         id: Number(mentorship_id),
         tutor_id: Number(user_id),
       },
+      include: {
+        appointments: {
+          where: {
+            status: {
+              some: {
+                status_id: AppointmentStatus.Placed,
+              },
+            },
+          },
+        },
+      },
     });
 
     if (!mentorship) {
@@ -33,21 +44,30 @@ const handler = async (
       });
     }
 
-    const deleteAppointments = prisma.appointment.deleteMany({
-      where: {
-        mentorship_id: Number(mentorship_id),
-        tutor_id: Number(user_id),
-      },
-    });
-
-    const deleteMentorship = prisma.mentorship.delete({
+    await prisma.mentorship.update({
       where: {
         id: Number(mentorship_id),
         tutor_id: Number(user_id),
       },
+      data: {
+        active: false,
+      },
     });
 
-    await prisma.$transaction([deleteAppointments, deleteMentorship]);
+    for (const appointment of mentorship.appointments) {
+      await prisma.appointment.update({
+        where: {
+          id: appointment.id,
+        },
+        data: {
+          status: {
+            create: {
+              status_id: AppointmentStatus.Cancelled,
+            },
+          },
+        },
+      });
+    }
 
     return Responses._200({ message: [i18nString("success")] });
   } catch (error) {

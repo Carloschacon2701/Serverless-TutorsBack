@@ -38,6 +38,7 @@ const handler = async (
       where: {
         tutor_id: Number(user_id),
         subject_id: subject_id,
+        active: true,
       },
     });
 
