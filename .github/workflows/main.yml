@@ -17,6 +17,7 @@ jobs:
       REGION: ${{ secrets.REGION }}
       TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
       TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
+      S3_BUCKET_PROFILE_PHOTOS: ${{ secrets.S3_BUCKET_PROFILE_PHOTOS }}
     strategy:
       matrix:
         node-version: [20.x]
