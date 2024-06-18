@@ -2,6 +2,6 @@ findAppointment:
   handler: src/functions/appointments/find/handler.find
   events:
     - http:
+        path: appointments/{appointmentId}
         cors: true
         method: get
-        path: appointments/{appointmentId}

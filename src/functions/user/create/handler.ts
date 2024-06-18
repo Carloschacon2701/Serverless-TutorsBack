@@ -94,7 +94,7 @@ const handler = async (
 
       const path = filename + "-" + uuid + "." + format;
 
-      presignedURL = await S3.getPresignedUrl(path);
+      presignedURL = await S3.getPresignedUrl(path, true);
 
       photo = `https://${S3_BUCKET}.s3.amazonaws.com/` + path;
     }

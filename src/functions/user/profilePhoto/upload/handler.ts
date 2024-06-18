@@ -39,7 +39,7 @@ export const handler = async (
 
     const path = filename + "-" + uuid + "." + format;
 
-    const presignedURL = await S3.getPresignedUrl(path);
+    const presignedURL = await S3.getPresignedUrl(path, true);
 
     const awsPath = `https://${S3_BUCKET}.s3.amazonaws.com/` + path;
 

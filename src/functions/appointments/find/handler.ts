@@ -4,6 +4,7 @@ import { Responses } from "../../../libs/Responses";
 import i18n from "../../../libs/i18n";
 import middy from "@middy/core";
 import jsonBodyParser from "@middy/http-json-body-parser";
+import { cognitoMiddleware } from "../../../middlewares/JWT";
 
 const i18nString = (key: string) => i18n.t("Appointment.find." + key);
 
@@ -12,9 +13,9 @@ const handler = async (
 ): Promise<APIGatewayProxyResult> => {
   try {
     const prisma = initializePrisma();
-    const { headers, queryStringParameters } = event;
+    const { headers, pathParameters } = event;
     const { user_id } = headers || {};
-    const { appointmentId } = queryStringParameters || {};
+    const { appointmentId } = pathParameters || {};
 
     const appointment = await prisma.appointment.findUnique({
       where: {
@@ -74,4 +75,4 @@ const handler = async (
   }
 };
 
-export const find = middy(handler).use([jsonBodyParser()]);
+export const find = middy(handler).use([jsonBodyParser(), cognitoMiddleware()]);

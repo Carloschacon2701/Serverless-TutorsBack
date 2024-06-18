@@ -7,13 +7,14 @@ import {
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const BUCKET = process.env.S3_BUCKET;
+const BUCKET_PHOTOS = process.env.S3_BUCKET_PROFILE_PHOTOS;
 const REGION = process.env.REGION;
 
 export const S3 = {
-  async getPresignedUrl(key: string) {
+  async getPresignedUrl(key: string, profilePhoto?: boolean) {
     const client = new S3Client({ region: REGION });
     const command = new PutObjectCommand({
-      Bucket: BUCKET,
+      Bucket: profilePhoto ? BUCKET_PHOTOS : BUCKET,
       Key: key,
     });
 
