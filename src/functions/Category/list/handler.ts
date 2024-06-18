@@ -7,12 +7,15 @@ import { i18nMiddleware } from "../../../middlewares/i18n";
 import { initializePrisma } from "../../../utils/prisma";
 
 const handler = async (
-  _event: APIGatewayProxyEvent
+  event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   try {
     const prisma = initializePrisma();
+    const { name = undefined } = event?.queryStringParameters || {};
+    const whereClause = name ? { name: { startsWith: name + "%" } } : {};
 
     const categories = await prisma.category.findMany({
+      where: whereClause,
       select: {
         name: true,
         id: true,

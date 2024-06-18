@@ -18,6 +18,7 @@ const handler = async (
     const { queryStringParameters } = event;
     const {
       category = undefined,
+      name = undefined,
       page = 1,
       limit = 10,
     } = queryStringParameters || {};
@@ -30,7 +31,17 @@ const handler = async (
       };
     }
 
+    if (name) {
+      whereClause = {
+        ...whereClause,
+        name: {
+          startsWith: name + "%",
+        },
+      };
+    }
+
     const subjects = await prisma.subject.findMany({
+      where: whereClause,
       select: {
         name: true,
         id: true,
@@ -40,10 +51,12 @@ const handler = async (
             id: true,
           },
         },
+        _count: {
+          select: { Document: true },
+        },
       },
       skip: (Number(page) - 1) * Number(limit),
       take: Number(limit),
-      where: whereClause,
     });
 
     const count = await prisma.subject.count({

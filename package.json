@@ -17,7 +17,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.12.10",
-    "prisma": "^5.13.0",
+    "prisma": "^5.15.1",
     "serverless-offline": "^13.5.0",
     "serverless-plugin-typescript": "^2.1.5",
     "serverless-prune-plugin": "^2.0.2",
@@ -32,7 +32,7 @@
     "@middy/core": "^4.7.0",
     "@middy/http-json-body-parser": "^4.7.0",
     "@prisma/adapter-libsql": "^5.14.0",
-    "@prisma/client": "^5.13.0",
+    "@prisma/client": "^5.15.1",
     "@types/aws-lambda": "^8.10.137",
     "aws-jwt-verify": "^4.0.1",
     "i18next": "^23.11.3",
