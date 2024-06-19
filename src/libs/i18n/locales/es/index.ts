@@ -73,6 +73,10 @@ export const ES = {
         dateMustBeFuture: "La fecha debe ser en el futuro",
         dateRequired: "La fecha es requerida",
         mentorshipRequired: "La mentoria es requerida",
+        appointmentAlreadyExists:
+          "Ya existe una cita para esta mentoria en esta fecha",
+        tutorCannotCreateAppointment:
+          "El tutor no puede crear una cita con su propia mentoria",
       },
       days: {
         monday: "Lunes",

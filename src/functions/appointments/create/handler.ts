@@ -20,8 +20,9 @@ const handler = async (
     const { body, headers } = event;
     const prisma = initializePrisma();
     const { mentorship = 0, date = "" } = body as unknown as ConsultacyCreation;
+    const user_id = Number(headers.user_id);
 
-    const existingMentorship = await prisma.mentorship.findUnique({
+    const existingMentorshipPromise = prisma.mentorship.findUnique({
       where: {
         id: mentorship,
         active: true,
@@ -45,9 +46,39 @@ const handler = async (
       },
     });
 
+    const existingAppointmentPromise = prisma.appointment.findFirst({
+      where: {
+        date: new Date(date),
+        mentorship_id: mentorship,
+        student_id: user_id,
+        status: {
+          some: {
+            status_id: 1,
+          },
+        },
+      },
+    });
+
+    const [existingMentorship, existingAppointment] = await Promise.all([
+      existingMentorshipPromise,
+      existingAppointmentPromise,
+    ]);
+
     if (!existingMentorship) {
       return Responses._400({
         errors: [i18nString("validations.mentorshipNotFound")],
+      });
+    }
+
+    if (existingMentorship.tutor_id === user_id) {
+      return Responses._400({
+        errors: [i18nString("validations.tutorCannotCreateAppointment")],
+      });
+    }
+
+    if (existingAppointment) {
+      return Responses._400({
+        errors: [i18nString("validations.appointmentAlreadyExists")],
       });
     }
 
@@ -58,6 +89,7 @@ const handler = async (
     }
 
     const parsedDay = new Date(date).getDay();
+
     const isValidDate = existingMentorship.work_days.some(
       (d) => d.id === parsedDay
     );
@@ -79,7 +111,7 @@ const handler = async (
         date: new Date(date),
         tutor_id: existingMentorship.tutor_id,
         mentorship_id: mentorship,
-        student_id: Number(headers.user_id),
+        student_id: user_id,
         status: {
           create: {
             status_id: 1,
