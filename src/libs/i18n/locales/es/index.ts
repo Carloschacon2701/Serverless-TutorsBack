@@ -34,6 +34,7 @@ export const ES = {
       validations: {
         currentPasswordRequired: "Contraseña actual es requerida",
         newPasswordRequired: "Nueva contraseña es requerida",
+        invalidCredentials: "Usuario o contraseña inválidos",
       },
     },
 

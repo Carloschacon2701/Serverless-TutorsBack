@@ -16,7 +16,11 @@ const handler = async (
     const prisma = initializePrisma();
     const { pathParameters, queryStringParameters } = event;
     const { sub_id = 0 } = pathParameters || {};
-    const { limit = 10, page = 1 } = queryStringParameters || {};
+    const {
+      limit = 10,
+      page = 1,
+      name = undefined,
+    } = queryStringParameters || {};
 
     const subject = await prisma.subject.findUnique({
       where: {
@@ -29,9 +33,12 @@ const handler = async (
         errors: [i18nString("validations.subjectNotFound")],
       });
 
+    const nameFilter = name ? { name: { startsWith: name + "%" } } : {};
+
     const list = await prisma.document.findMany({
       where: {
         subject_id: Number(sub_id),
+        ...nameFilter,
       },
       select: {
         category_id: true,

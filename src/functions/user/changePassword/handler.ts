@@ -30,8 +30,15 @@ const handler = async (
     return Responses._200({
       message: i18nString("success"),
     });
-  } catch (error) {
+  } catch (error: any) {
     console.log("Error", error);
+
+    if (error?.name === "NotAuthorizedException") {
+      return Responses._400({
+        errors: [i18nString("validations.invalidCredentials")],
+      });
+    }
+
     return Responses._500({ errors: [i18n.t("internalServerError")] });
   }
 };
