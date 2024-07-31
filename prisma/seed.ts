@@ -5,39 +5,39 @@ const prisma = initializePrisma();
 const careers = [
   {
     id: 1,
-    name: "Informatic Engineering",
+    name: "Ingeniería Informática",
   },
   {
     id: 2,
-    name: "Mechanical Engineering",
+    name: "Ingeniería Mecánica",
   },
   {
     id: 3,
-    name: "Electronic Engineering",
+    name: "Ingeniería Electrónica",
   },
   {
     id: 4,
-    name: "Civil Engineering",
+    name: "Ingeniería Civil",
   },
   {
     id: 5,
-    name: "Architecture",
+    name: "Arquitectura",
   },
   {
     id: 6,
-    name: "Industrial Engineering",
+    name: "Ingeniería Industrial",
   },
   {
     id: 7,
-    name: "Environmental Engineering",
+    name: "Ingeniería Ambiental",
   },
   {
     id: 8,
-    name: "Psychology",
+    name: "Psicología",
   },
   {
     id: 9,
-    name: "Civil Engineering",
+    name: "Ingeniería Civil",
   },
 ];
 
